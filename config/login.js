@@ -13,6 +13,7 @@ exports.login = function(email,password,callback) {
             var unique_id = users[0].person_credentials.token;
             var temp = users[0].person_credentials.salt;
             var hash_db = users[0].person_credentials.hashed_password;
+            var name = users[0].person_credentials.name;
             var id = users[0]._id;
             var newpass = temp + password;
             var hashed_password = crypto.createHash('sha512').update(newpass).digest("hex");
@@ -20,7 +21,7 @@ exports.login = function(email,password,callback) {
             
             if(hash_db == hashed_password)
             {
-                callback({'response':"Login Sucess",'token':unique_id,'success':true,'_id':id,'grav':grav_url});
+                callback({'response':"Login Sucess",'token':unique_id,'success':true,'_id':id,'grav':grav_url,'name':name});
             }
             else
             {
