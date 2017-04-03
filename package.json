@@ -1,0 +1,21 @@
+{
+  "name": "node_server",
+  "version": "1.0.0",
+  "description": "A Server for getting requests from our android app and getting that data stored in MongoDB Database.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kanak Bagga",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "crypto": "~0.0.3",
+    "csprng": "~0.1.1",
+    "express": "~4.0.0",
+    "gravatar": "~1.0.6",
+    "mongodb": "^2.2.25",
+    "mongoose": "^4.9.0",
+    "nodemailer": "~0.6.3"
+  }
+}

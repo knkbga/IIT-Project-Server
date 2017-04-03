@@ -1,0 +1,102 @@
+collection :
+{
+    users :
+    [{
+        "person_credentials" :
+        {
+            "salt"  : null,
+            "token" : null,
+            "name"  : null,
+            "email" : null,
+            "phone" : null,
+            "hashed_password" : null
+        },
+        "comprehensive_events":
+        {
+            "WO_Distraction" :
+            [
+                {
+                    "start_session": null,
+                    "end_session":null,
+                    "point_end":null,
+                    "different_events":
+                    [
+                        {
+                            "string_answer" : null,
+                            "string_question" : null,
+                            "time_of_start" : null,
+                            "time_of_end" : null,
+                            "level" : null,
+                            "success" : null,
+                            "time_of_submission" : null
+                        }
+                    ]
+                }
+            ],
+            "W_Distraction" :
+            [
+                {
+                    "start_session" : null,
+                    "end_session" : null,
+                    "point_end" : null,
+                    "different_events":
+                    [
+                        {
+                            "string_answer" : null,
+                            "string_question" : null,
+                            "time_of_start" : null,
+                            "time_of_end" : null,
+                            "level" : null,
+                            "success" : null,
+                            "time_of_submission" : null
+                        }
+                    ]
+                }
+            ],
+            "Gaming" :
+            {
+                "WO_Distraction" : 
+                [
+                    {
+                        "start_session" : null,
+                        "end_session" : null,
+                        "point_end" : null,
+                        "different_events":
+                        [
+                            {
+                                "string_answer" : null,
+                                "string_question" : null,
+                                "lives_till_used" : null,
+                                "time_of_start" : null,
+                                "time_of_end" : null,
+                                "level ": null,
+                                "success" : null,
+                                "time_of_submission" : null
+                            }
+                        ]
+                    }
+                ],
+                "W_Distraction" :
+                [
+                    {
+                        "start_session" : null,
+                        "end_session" : null,
+                        "point_end" : null,
+                        "different_events":
+                        [
+                            {
+                                "string_answer" : null,
+                                "string_question" : null,
+                                "lives_till_used" : null,
+                                "time_of_start" : null,
+                                "time_of_end" : null,
+                                "level" : null,
+                                "success" : null,
+                                "time_of_submission" : null
+                            }
+                        ]
+                    }
+                ]
+            }
+        }
+    }]
