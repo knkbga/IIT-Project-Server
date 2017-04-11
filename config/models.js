@@ -23,6 +23,7 @@ var userSchema = mongoose.Schema({
                     "different_events":
                     [
                         {
+                            "set_number": Number ,
                             "string_answer" : String,
                             "string_question" : String,
                             "time_of_start" : String,
@@ -43,6 +44,7 @@ var userSchema = mongoose.Schema({
                     "different_events":
                     [
                         {
+                            "set_number": Number ,
                             "string_answer" : String,
                             "string_question" : String,
                             "time_of_start" : String,
@@ -65,6 +67,7 @@ var userSchema = mongoose.Schema({
                         "different_events":
                         [
                             {
+                                "set_number": Number,
                                 "string_answer" : String,
                                 "string_question" : String,
                                 "lives_till_used" : Number,
@@ -86,6 +89,7 @@ var userSchema = mongoose.Schema({
                         "different_events":
                         [
                             {
+                                "set_number": Number,
                                 "string_answer" : String,
                                 "string_question" : String,
                                 "lives_till_used" : Number,
@@ -102,5 +106,6 @@ var userSchema = mongoose.Schema({
         }
     });
 
-mongoose.connect('mongodb://knkbga:1Direction@ds129050.mlab.com:29050/survey');
+//mongoose.connect('mongodb://knkbga:1Direction@ds129050.mlab.com:29050/survey');
+mongoose.connect('mongodb://localhost/test');
 module.exports = mongoose.model('users', userSchema);

@@ -5,6 +5,7 @@ var ObjectId = require('mongodb').ObjectID;
 exports.session = function (w_wo , _id , entry , callback)
 {    
     console.log("In sessions.session");
+    console.log(JSON.stringify(entry));
     if(w_wo==0)//With Distraction Not Gaming
     {
         users.findByIdAndUpdate(ObjectId(_id), 
@@ -14,7 +15,7 @@ exports.session = function (w_wo , _id , entry , callback)
         {
             if(err)
             {
-                callback({res:false});
+                callback({res:false,response:"Error in updation"});
             }
             else
             {
@@ -32,7 +33,7 @@ exports.session = function (w_wo , _id , entry , callback)
         {
             if(err)
             {
-                callback({res:false});
+                callback({res:false,response:"Error in updation"});
             }
             else
             {
@@ -50,7 +51,7 @@ exports.session = function (w_wo , _id , entry , callback)
         {
             if(err)
             {
-                callback({res:false});
+                callback({res:false,response:"Error in updation"});
             }
             else
             {
@@ -68,7 +69,7 @@ exports.session = function (w_wo , _id , entry , callback)
         {
             if(err)
             {
-                callback({res:false});
+                callback({res:false,response:"Error in updation"});
             }
             else
             {

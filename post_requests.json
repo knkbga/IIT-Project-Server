@@ -4,11 +4,13 @@
     point_end: null,
     different_events: [
         {
+            set_number:1,
+            level:1,
             string_answer: "78890",
             string_question: "78890",
-            lives_till_used: 0,
             time_of_start: "Tue Mar 21 2017 09:25:56 GMT+0530 (IST)",
             time_of_end: "Tue Mar 21 2017 09:36:56 GMT+0530 (IST)",
+            lives_till_used: 0,
             success: true,
             time_of_submission: "Tue Mar 21 2017 09:36:56 GMT+0530 (IST)"
         }

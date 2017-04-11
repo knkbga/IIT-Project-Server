@@ -6,10 +6,12 @@ var sessions = require('../config/sessions');
 module.exports = function(app) {
     
     app.get('/' ,  function(req ,  res) {
+        console.log("Get Requested");
         res.end("Node-Android-Project");
     });
 
     app.post('/login' , function(req , res){
+        console.log("In login");
         var email = req.body.email;
         var password = req.body.password;
         
@@ -42,10 +44,11 @@ module.exports = function(app) {
         {
             different_events[i] = {
                 string_answer: req.body.different_events[i].string_answer,
+                set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
                 time_of_start: req.body.different_events[i].time_of_start,
                 time_of_end: req.body.different_events[i].time_of_end,
-                level: parseInt(req.body.level),
+                level: parseInt(req.body.different_events[i].level),
                 success: Boolean(String(req.body.different_events[i].success)),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
@@ -60,7 +63,7 @@ module.exports = function(app) {
         
         sessions.session(0 , _id , entry , function(found)
         {
-            console.log("\n\n\n"+JSON.stringify(found)+"\n\n\n");
+//            console.log("\n\n\n"+JSON.stringify(found)+"\n\n\n");
             res.json(found);
         });
     });
@@ -70,14 +73,18 @@ module.exports = function(app) {
         var different_events = new Array();
         var _id = req.body._id;
         
+        console.log(JSON.stringify(req.body));
+        
         for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
         {
             different_events[i] = {
+                lives_till_used: parseInt(req.body.different_events[i].lives_till_used),
                 string_answer: req.body.different_events[i].string_answer,
+                set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
                 time_of_start: req.body.different_events[i].time_of_start,
                 time_of_end: req.body.different_events[i].time_of_end,
-                level: parseInt(req.body.level),
+                level: parseInt(req.body.different_events[i].level),
                 success: Boolean(String(req.body.different_events[i].success)),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
@@ -92,7 +99,7 @@ module.exports = function(app) {
         
         sessions.session(1 , _id, entry , function(found)
         {
-            console.log(found);
+//            console.log("\n\n\n"+JSON.stringify(entry)+"\n\n\n\n");
             res.json(found);
         });
     });
@@ -106,11 +113,12 @@ module.exports = function(app) {
         {
             different_events[i] = {
                 string_answer: req.body.different_events[i].string_answer,
+                set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
                 time_of_start: req.body.different_events[i].time_of_start,
                 time_of_end: req.body.different_events[i].time_of_end,
                 lives_till_used: parseInt(req.body.different_events[i].lives_till_used),
-                level: parseInt(req.body.level),
+                level: parseInt(req.body.different_events[i].level),
                 success: Boolean(String(req.body.different_events[i].success)),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
@@ -125,7 +133,7 @@ module.exports = function(app) {
         
         sessions.session(2 , _id, entry , function(found)
         {
-            console.log(found);
+//            console.log("\n\n\n"+JSON.stringify(entry)+"\n\n\n\n");
             res.json(found);
         });
     });
@@ -139,11 +147,12 @@ module.exports = function(app) {
         {
             different_events[i] = {
                 string_answer: req.body.different_events[i].string_answer,
+                set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
                 time_of_start: req.body.different_events[i].time_of_start,
                 time_of_end: req.body.different_events[i].time_of_end,
                 lives_till_used: parseInt(req.body.different_events[i].lives_till_used),
-                level: parseInt(req.body.level),
+                level: parseInt(req.body.different_events[i].level),
                 success: Boolean(String(req.body.different_events[i].success)),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
@@ -158,7 +167,7 @@ module.exports = function(app) {
         
         sessions.session(3 , _id, entry , function(found)
         {
-            console.log(found);
+//            console.log("\n\n\n"+JSON.stringify(entry)+"\n\n\n\n");
             res.json(found);
         });
     });
