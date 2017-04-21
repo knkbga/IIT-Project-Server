@@ -32,7 +32,7 @@ var userSchema = mongoose.Schema({
                                 "time_of_start" : String,
                                 "time_of_end" : String,
                                 "level" : Number,
-                                "success" : Boolean,
+                                "success" : String,
                                 "time_of_submission" : String
                             }
                         ]
@@ -54,7 +54,7 @@ var userSchema = mongoose.Schema({
                                 "time_of_start" : String,
                                 "time_of_end" : String,
                                 "level" : Number,
-                                "success" : Boolean,
+                                "success" : String,
                                 "time_of_submission" : String
                             }
                         ]
@@ -79,7 +79,7 @@ var userSchema = mongoose.Schema({
                                 "time_of_start" : String,
                                 "time_of_end" : String,
                                 "level ": Number,
-                                "success" : Boolean,
+                                "success" : String,
                                 "time_of_submission" : String
                             }
                         ]
@@ -101,7 +101,7 @@ var userSchema = mongoose.Schema({
                                 "time_of_start" : String,
                                 "time_of_end" : String,
                                 "level ": Number,
-                                "success" : Boolean,
+                                "success" : String,
                                 "time_of_submission" : String
                             }
                         ]

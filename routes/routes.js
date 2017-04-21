@@ -89,6 +89,9 @@ module.exports = function(app) {
                 success: Boolean(String(req.body.different_events[i].success)),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
+            
+            console.log("When false sent :: "+(req.body.different_events[i].success));
+            
         }
 
         var entry ={
