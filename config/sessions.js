@@ -8,7 +8,7 @@ exports.session = function (w_wo , _id , entry , callback)
     if(w_wo==0)//With Distraction Not Gaming
     {
         users.findByIdAndUpdate(ObjectId(_id), 
-        {$push: {"comprehensive_events.W_Distraction": entry}},
+        {$push: {"comprehensive_events.trials.W_Distraction": entry}},
         {safe: true, upsert: true,new:true},
         function(err, model)
         {
@@ -26,7 +26,7 @@ exports.session = function (w_wo , _id , entry , callback)
     else if(w_wo==1) //Without Distraction Not Gaming
     {
         users.findByIdAndUpdate(ObjectId(_id), 
-        {$push: {"comprehensive_events.WO_Distraction": entry}},
+        {$push: {"comprehensive_events.trials.WO_Distraction": entry}},
         {safe: true, upsert: true,new:true},
         function(err, model)
         {
@@ -44,7 +44,7 @@ exports.session = function (w_wo , _id , entry , callback)
     else if(w_wo==2) //With Distraction And Gaming
     {
         users.findByIdAndUpdate(ObjectId(_id), 
-        {$push: {"comprehensive_events.Gaming.WO_Distraction": entry}},
+        {$push: {"comprehensive_events.gaming.WO_Distraction": entry}},
         {safe: true, upsert: true,new:true},
         function(err, model)
         {
@@ -62,7 +62,7 @@ exports.session = function (w_wo , _id , entry , callback)
     else if(w_wo==3) //Without Distraction And Gaming
     {
         users.findByIdAndUpdate(ObjectId(_id), 
-        {$push: {"comprehensive_events.Gaming.WO_Distraction": entry}},
+        {$push: {"comprehensive_events.gaming.WO_Distraction": entry}},
         {safe: true, upsert: true,new:true},
         function(err, model)
         {

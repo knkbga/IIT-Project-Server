@@ -42,6 +42,7 @@ module.exports = function(app) {
         for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
         {
             different_events[i] = {
+                lives_till_used : req.body.different_events[i].lives_till_used,
                 string_answer: req.body.different_events[i].string_answer,
                 set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
@@ -78,6 +79,7 @@ module.exports = function(app) {
         for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
         {
             different_events[i] = {
+                lives_till_used : req.body.different_events[i].lives_till_used,
                 string_answer: req.body.different_events[i].string_answer,
                 set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
@@ -111,6 +113,7 @@ module.exports = function(app) {
         for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
         {
             different_events[i] = {
+                lives_till_used : req.body.different_events[i].lives_till_used,
                 string_answer: req.body.different_events[i].string_answer,
                 set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
@@ -145,6 +148,7 @@ module.exports = function(app) {
         for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
         {
             different_events[i] = {
+                lives_till_used : req.body.different_events[i].lives_till_used,
                 string_answer: req.body.different_events[i].string_answer,
                 set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
