@@ -4,8 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 exports.session = function (w_wo , _id , entry , callback)
 {    
-    console.log("In sessions.session");
-    console.log(JSON.stringify(entry));
+    console.log("\nIn sessions.session\n");
     if(w_wo==0)//With Distraction Not Gaming
     {
         users.findByIdAndUpdate(ObjectId(_id), 

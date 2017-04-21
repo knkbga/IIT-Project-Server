@@ -28,7 +28,7 @@ exports.register = function(email,password,name,phone,callback)
                         "phone" : phone,
                         "hashed_password" : hashed_password
                     },
-                    "comprehensive_events":
+                    /*"comprehensive_events":
                     {
                         "WO_Distraction" :
                         [
@@ -115,7 +115,7 @@ exports.register = function(email,password,name,phone,callback)
                                 }
                             ]
                         }
-                    }
+                    }*/
                 }
             );
 

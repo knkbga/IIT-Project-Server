@@ -30,7 +30,6 @@ module.exports = function(app) {
         var phone = req.body.phone;
         
         register.register(email , password , name , phone , function (found) {
-            console.log(found);
             res.json(found);
         });
     });
@@ -70,15 +69,15 @@ module.exports = function(app) {
     
     app.post('/comprehensive/trial/without' , function(req , res){
         
+        
         var different_events = new Array();
         var _id = req.body._id;
         
-        console.log(JSON.stringify(req.body));
+        console.log("\n\nRequest recieved :: \t"+JSON.stringify(req.body));
         
         for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
         {
             different_events[i] = {
-                lives_till_used: parseInt(req.body.different_events[i].lives_till_used),
                 string_answer: req.body.different_events[i].string_answer,
                 set_number: req.body.different_events[i].set_number,
                 string_question: req.body.different_events[i].string_question,
