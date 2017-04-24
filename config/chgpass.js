@@ -7,7 +7,7 @@ var user = require('../config/models');
 var smtpTransport = nodemailer.createTransport("SMTP",{
     auth: {
         user: "kanakbagga1@gmail.com",
-        pass: "Gian Jyoti"
+        pass: "Jyoti Gian"
         }
 });
  
