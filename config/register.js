@@ -21,6 +21,7 @@ exports.register = function(email,password,name,phone,callback)
                 {
                     "person_credentials" :
                     {
+                        "temp_str" : "",
                         "salt"  : temp,
                         "token" : token,
                         "name"  : name,

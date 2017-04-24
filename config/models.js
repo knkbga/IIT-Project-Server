@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var userSchema = mongoose.Schema({
         "person_credentials" :
         {
+            "temp_str" : String,
             "salt"  : String,
             "token" : String,
             "name"  : String,
@@ -111,6 +112,6 @@ var userSchema = mongoose.Schema({
         }
     });
 
-mongoose.connect('mongodb://knkbga:1Direction@ds129050.mlab.com:29050/survey');
-//mongoose.connect('mongodb://localhost/test');
+//mongoose.connect('mongodb://knkbga:1Direction@ds129050.mlab.com:29050/survey');
+mongoose.connect('mongodb://localhost/test');
 module.exports = mongoose.model('users', userSchema);

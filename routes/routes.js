@@ -1,4 +1,4 @@
-//var chgpass = require('./config/chgpass');
+var chgpass = require('../config/chgpass');
 var register = require('../config/register');
 var login = require('../config/login');
 var sessions = require('../config/sessions');
@@ -90,8 +90,6 @@ module.exports = function(app) {
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
             
-            console.log("When false sent :: "+(req.body.different_events[i].success));
-            
         }
 
         var entry ={
@@ -108,7 +106,7 @@ module.exports = function(app) {
         });
     });
     
-    app.post('comprehensive/gaming/with' , function(req , res){
+    app.post('/comprehensive/gaming/with' , function(req , res){
         
         var different_events = new Array();
         var _id = req.body._id;
@@ -143,7 +141,7 @@ module.exports = function(app) {
         });
     });
     
-    app.post('comprehensive/gaming/without' , function(req , res){
+    app.post('/comprehensive/gaming/without' , function(req , res){
         
         var different_events = new Array();
         var _id = req.body._id;
@@ -179,9 +177,6 @@ module.exports = function(app) {
     });
     
     
-    
- 
- 
     /*app.post('/api/chgpass' ,  function(req ,  res) {
         var id = req.body.id;
                 var opass = req.body.oldpass;
@@ -191,7 +186,7 @@ module.exports = function(app) {
             console.log(found);
             res.json(found);
         });
-    });
+    });*/
  
  
     app.post('/api/resetpass' ,  function(req ,  res) {
@@ -215,7 +210,7 @@ module.exports = function(app) {
                 console.log(found);
                 res.json(found);
         });
-    });*/
+    });
  
  
 };
