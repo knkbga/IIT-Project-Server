@@ -104,11 +104,12 @@ exports.respass_init = function(email,callback) {
  
 exports.respass_chg = function(email,code,npass,callback) 
 {
+    console.log("In resetpass_chg");
     user.find({'person_credentials.email': email},function(err,users)
     {
         if(users.length != 0)
         {
-
+            console.log("User found");
             var temp = users[0].person_credentials.temp_str;
             var temp1 =rand(160, 36);
             var newpass1 = temp1 + npass;
@@ -116,10 +117,12 @@ exports.respass_chg = function(email,code,npass,callback)
 
             if(temp == code)
             {
+                console.log("Code matches");
                 if (npass.length > 4) 
                 {
                     user.findOne({ 'person_credentials.email': email }, function (err, doc)
                     {
+                        console.log("user again searched");
                         doc.person_credentials.hashed_password= hashed_password;
                         doc.person_credentials.salt = temp1;
                         doc.person_credentials.temp_str = "";
