@@ -2,7 +2,10 @@ var chgpass = require('../config/chgpass');
 var register = require('../config/register');
 var login = require('../config/login');
 var sessions = require('../config/sessions');
- 
+var path = require('path');
+var mime = require('mime');
+var fs = require('fs');
+
 module.exports = function(app) {
     
     app.get('/' ,  function(req ,  res) {
@@ -10,6 +13,22 @@ module.exports = function(app) {
         res.end("Node-Android-Project");
     });
 
+    app.get('/download' , function(req,res){
+       
+        console.log("Download requested");
+        var file = __dirname + '/../APK/app-release.apk';
+
+        var filename = path.basename(file);
+        var mimetype = mime.lookup(file);
+
+        res.setHeader('Content-disposition', 'attachment; filename=' + filename);
+        res.setHeader('Content-type', mimetype);
+
+        var filestream = fs.createReadStream(file);
+        filestream.pipe(res);
+        
+    });
+    
     app.post('/login' , function(req , res){
         console.log("In login");
         var email = req.body.email;
@@ -24,12 +43,19 @@ module.exports = function(app) {
  
     app.post('/register' , function(req , res){
         
+        console.log("Register Params::\t"+JSON.stringify(req.body));
+        
         var email = req.body.email;
         var password = req.body.password;
         var name = req.body.name;
         var phone = req.body.phone;
+        var gender = req.body.gender;
+        var age = req.body.age;
+        var sleep_hours = req.body.sleep_hours;
+        var grade_10 = req.body.grade_10;
+        var test_rank = req.body.test_rank;
         
-        register.register(email , password , name , phone , function (found) {
+        register.register(email , password , name , phone , gender , age , grade_10 , sleep_hours , test_rank , function (found) {
             res.json(found);
         });
     });

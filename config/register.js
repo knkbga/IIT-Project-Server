@@ -5,7 +5,7 @@ var user = require('../config/models');
  
  
  
-exports.register = function(email,password,name,phone,callback)
+exports.register = function(email,password,name,phone,gender,age,grade_10,sleep_hours,test_rank,callback)
 {
     var x = email;
     if(!(x.indexOf("@")==x.length))
@@ -21,6 +21,11 @@ exports.register = function(email,password,name,phone,callback)
                 {
                     "person_credentials" :
                     {
+                        "test_rank" : test_rank,
+                        "gender" : gender,
+                        "age" : age,
+                        "grade_10" : grade_10,
+                        "sleep_hours" : sleep_hours,
                         "temp_str" : "",
                         "salt"  : temp,
                         "token" : token,
@@ -28,95 +33,7 @@ exports.register = function(email,password,name,phone,callback)
                         "email" : email,
                         "phone" : phone,
                         "hashed_password" : hashed_password
-                    },
-                    /*"comprehensive_events":
-                    {
-                        "WO_Distraction" :
-                        [
-                            {
-                                "start_session": null,
-                                "end_session":null,
-                                "point_end":null,
-                                "different_events":
-                                [
-                                    {
-                                        "string_answer" : null,
-                                        "string_question" : null,
-                                        "time_of_start" : null,
-                                        "time_of_end" : null,
-                                        "level" : null,
-                                        "success" : null,
-                                        "time_of_submission" : null
-                                    }
-                                ]
-                            }
-                        ],
-                        "W_Distraction" :
-                        [
-                            {
-                                "start_session" : null,
-                                "end_session" : null,
-                                "point_end" : null,
-                                "different_events":
-                                [
-                                    {
-                                        "string_answer" : null,
-                                        "string_question" : null,
-                                        "time_of_start" : null,
-                                        "time_of_end" : null,
-                                        "level" : null,
-                                        "success" : null,
-                                        "time_of_submission" : null
-                                    }
-                                ]
-                            }
-                        ],
-                        "Gaming" :
-                        {
-                            "WO_Distraction" : 
-                            [
-                                {
-                                    "start_session" : null,
-                                    "end_session" : null,
-                                    "point_end" : null,
-                                    "different_events":
-                                    [
-                                        {
-                                            "string_answer" : null,
-                                            "string_question" : null,
-                                            "lives_till_used" : null,
-                                            "time_of_start" : null,
-                                            "time_of_end" : null,
-                                            "level ": null,
-                                            "success" : null,
-                                            "time_of_submission" : null
-                                        }
-                                    ]
-                                }
-                            ],
-                            "W_Distraction" :
-                            [
-                                {
-                                    "start_session" : null,
-                                    "end_session" : null,
-                                    "point_end" : null,
-                                    "different_events":
-                                    [
-                                        {
-                                            "string_answer" : null,
-                                            "string_question" : null,
-                                            "lives_till_used" : null,
-                                            "time_of_start" : null,
-                                            "time_of_end" : null,
-                                            "level" : null,
-                                            "success" : null,
-                                            "time_of_submission" : null
-                                        }
-                                    ]
-                                }
-                            ]
-                        }
-                    }*/
+                    }
                 }
             );
 
