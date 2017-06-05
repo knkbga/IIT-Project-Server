@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var userSchema = mongoose.Schema({
         "person_credentials" :
         {
+            "institute" : String,
             "test_rank" : Number,
             "gender" : String,
             "age" : Number,

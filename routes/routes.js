@@ -54,8 +54,9 @@ module.exports = function(app) {
         var sleep_hours = req.body.sleep_hours;
         var grade_10 = req.body.grade_10;
         var test_rank = req.body.test_rank;
+        var institute = req.body.institute;
         
-        register.register(email , password , name , phone , gender , age , grade_10 , sleep_hours , test_rank , function (found) {
+        register.register(email , password , name , phone , gender , age , grade_10 , sleep_hours , test_rank , institute , function (found) {
             res.json(found);
         });
     });
