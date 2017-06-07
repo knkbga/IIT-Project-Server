@@ -44,7 +44,7 @@ exports.session = function (w_wo , _id , entry , callback)
     else if(w_wo==2) //With Distraction And Gaming
     {
         users.findByIdAndUpdate(ObjectId(_id), 
-        {$push: {"comprehensive_events.gaming.WO_Distraction": entry}},
+        {$push: {"comprehensive_events.gaming.W_Distraction": entry}},
         {safe: true, upsert: true,new:true},
         function(err, model)
         {
