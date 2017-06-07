@@ -63,6 +63,8 @@ module.exports = function(app) {
     
     app.post('/comprehensive/trial/with' , function(req , res){
         
+        console.log("/comprehensive/trial/with::\t"+JSON.stringify(req.body));
+        
         var different_events = new Array();
         var _id = req.body._id;
         
@@ -76,7 +78,7 @@ module.exports = function(app) {
                 time_of_start: req.body.different_events[i].time_of_start,
                 time_of_end: req.body.different_events[i].time_of_end,
                 level: parseInt(req.body.different_events[i].level),
-                success: Boolean(String(req.body.different_events[i].success)),
+                success: String(req.body.different_events[i].success),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
         }
@@ -97,11 +99,10 @@ module.exports = function(app) {
     
     app.post('/comprehensive/trial/without' , function(req , res){
         
+        console.log("/comprehensive/trial/without::\t"+JSON.stringify(req.body));
         
         var different_events = new Array();
         var _id = req.body._id;
-        
-        console.log("\n\nRequest recieved :: \t"+JSON.stringify(req.body));
         
         for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
         {
@@ -113,7 +114,7 @@ module.exports = function(app) {
                 time_of_start: req.body.different_events[i].time_of_start,
                 time_of_end: req.body.different_events[i].time_of_end,
                 level: parseInt(req.body.different_events[i].level),
-                success: Boolean(String(req.body.different_events[i].success)),
+                success: String(req.body.different_events[i].success),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
             
@@ -135,6 +136,8 @@ module.exports = function(app) {
     
     app.post('/comprehensive/gaming/with' , function(req , res){
         
+        console.log("/comprehensive/gaming/with::\t"+JSON.stringify(req.body));
+        
         var different_events = new Array();
         var _id = req.body._id;
         
@@ -149,7 +152,7 @@ module.exports = function(app) {
                 time_of_end: req.body.different_events[i].time_of_end,
                 lives_till_used: parseInt(req.body.different_events[i].lives_till_used),
                 level: parseInt(req.body.different_events[i].level),
-                success: Boolean(String(req.body.different_events[i].success)),
+                success: String(req.body.different_events[i].success),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
         }
@@ -170,6 +173,8 @@ module.exports = function(app) {
     
     app.post('/comprehensive/gaming/without' , function(req , res){
         
+        console.log("/comprehensive/gaming/without::\t"+JSON.stringify(req.body));
+        
         var different_events = new Array();
         var _id = req.body._id;
         
@@ -184,7 +189,7 @@ module.exports = function(app) {
                 time_of_end: req.body.different_events[i].time_of_end,
                 lives_till_used: parseInt(req.body.different_events[i].lives_till_used),
                 level: parseInt(req.body.different_events[i].level),
-                success: Boolean(String(req.body.different_events[i].success)),
+                success: String(req.body.different_events[i].success),
                 time_of_submission: req.body.different_events[i].time_of_submission
             };
         }

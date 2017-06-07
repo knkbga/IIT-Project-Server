@@ -19,7 +19,6 @@ exports.session = function (w_wo , _id , entry , callback)
             else
             {
                 callback({res:true,w_id:model._id});
-                console.log(model);
             }
         });
     }
@@ -37,7 +36,6 @@ exports.session = function (w_wo , _id , entry , callback)
             else
             {
                 callback({res:true,wo_id:model._id});
-                console.log(model);
             }
         });
     }
@@ -55,7 +53,6 @@ exports.session = function (w_wo , _id , entry , callback)
             else
             {
                 callback({res:true,g_w_id:model._id});
-                console.log(model);
             }
         });
     }
@@ -73,7 +70,6 @@ exports.session = function (w_wo , _id , entry , callback)
             else
             {
                 callback({res:true,g_wo_id:model._id});
-                console.log(model);
             }
         });
     }
