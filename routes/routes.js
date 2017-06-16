@@ -15,7 +15,8 @@ module.exports = function(app) {
 
     app.get('/download' , function(req,res){
        
-        console.log("Download requested");
+        res.end("Ab nhi download karne doonga!!");
+        /*console.log("Download requested");
         var file = __dirname + '/../APK/app-release.apk';
 
         var filename = path.basename(file);
@@ -25,7 +26,7 @@ module.exports = function(app) {
         res.setHeader('Content-type', mimetype);
 
         var filestream = fs.createReadStream(file);
-        filestream.pipe(res);
+        filestream.pipe(res);*/
         
     });
     
