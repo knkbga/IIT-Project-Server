@@ -21,16 +21,14 @@ exports.login = function(email,password,app_code,callback) {
                 var newpass = temp + password;
                 var hashed_password = crypto.createHash('sha512').update(newpass).digest("hex");
 
-                    if(hash_db == hashed_password)
-                    {
-                        callback({'response':"Login Sucess",'token':unique_id,'success':true,'_id':id});
-                    }
-                    else
-                    {
-                        callback({'response':"Invalid Password",'success':false});
-                    }
+                if(hash_db == hashed_password)
+                {
+                    callback({'response':"Login Sucess",'token':unique_id,'success':true,'_id':id});
                 }
-
+                else
+                {
+                    callback({'response':"Invalid Password",'success':false});
+                }
             }
             else 
             {
