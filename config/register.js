@@ -40,15 +40,22 @@ exports.register = function(email,password,name,phone,gender,age,grade_10,sleep_
 
             user.find({'person_credentials.email': email},function(err,users){
                 var len = users.length;
-                if(len == 0)
+                if(app_code == "mzf")
                 {
-                    newuser.save(function (err){
-                        callback({'response':"Sucessfully Registered",success:true});
-                    });
+                    if(len == 0)
+                    {
+                        newuser.save(function (err){
+                            callback({'response':"Sucessfully Registered",success:true});
+                        });
+                    }
+                    else
+                    {
+                        callback({'response':"Email already Registered",success:false});
+                    }
                 }
                 else
                 {
-                    callback({'response':"Email already Registered",success:false});
+                    callback({'response':"Your app is outdated...",success:false});
                 }
             });
         }

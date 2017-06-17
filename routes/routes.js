@@ -34,7 +34,7 @@ module.exports = function(app) {
         console.log("In login");
         var email = req.body.email;
         var password = req.body.password;
-        var password = req.body.password;
+        var app_code = req.body.app_code;
         
         login.login(email , password , app_code , function (found) {
             console.log(found);
@@ -57,8 +57,9 @@ module.exports = function(app) {
         var grade_10 = req.body.grade_10;
         var test_rank = req.body.test_rank;
         var institute = req.body.institute;
+        var app_code = req.body.app_code;
         
-        register.register(email , password , name , phone , gender , age , grade_10 , sleep_hours , test_rank , institute , function (found) {
+        register.register( app_code , email , password , name , phone , gender , age , grade_10 , sleep_hours , test_rank , institute , function (found) {
             res.json(found);
         });
     });
