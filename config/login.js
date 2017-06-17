@@ -3,10 +3,12 @@ var rand = require('csprng');
 var mongoose = require('mongoose');
 var user = require('../config/models');
 
-exports.login = function(email,password,callback) {
+exports.login = function(email,password,app_code,callback) {
 
+    console.log("In login.js");
     user.find({'person_credentials.email': email},function(err,users)
     {
+        console.log("Email id found.");
         if(users.length != 0)
         {
             var unique_id = users[0].person_credentials.token;
@@ -35,7 +37,7 @@ exports.login = function(email,password,callback) {
         }
         else 
         {
-            callback({'response':"User not exist",'success':false});
+            callback({'response':"Email id not valid.",'success':false});
         }
     });
 }

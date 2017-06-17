@@ -5,7 +5,7 @@ var user = require('../config/models');
  
  
  
-exports.register = function(email,password,name,phone,gender,age,grade_10,sleep_hours,test_rank,institute,callback)
+exports.register = function(app_code,email,password,name,phone,gender,age,grade_10,sleep_hours,test_rank,institute,callback)
 {
     var x = email;
     if(!(x.indexOf("@")==x.length))
