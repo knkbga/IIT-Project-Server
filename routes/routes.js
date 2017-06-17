@@ -15,7 +15,7 @@ module.exports = function(app) {
 
     app.get('/download' , function(req,res){
        
-        res.end("Ab nhi download karne doonga!!");
+        res.end("Updated app is in progress...");
         /*console.log("Download requested");
         var file = __dirname + '/../APK/app-release.apk';
 
@@ -34,8 +34,9 @@ module.exports = function(app) {
         console.log("In login");
         var email = req.body.email;
         var password = req.body.password;
+        var password = req.body.password;
         
-        login.login(email , password , function (found) {
+        login.login(email , password , app_code , function (found) {
             console.log(found);
             res.json(found);
         });

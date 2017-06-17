@@ -17,13 +17,20 @@ exports.login = function(email,password,callback) {
             var newpass = temp + password;
             var hashed_password = crypto.createHash('sha512').update(newpass).digest("hex");
             
-            if(hash_db == hashed_password)
+            if(app_code=="mzf")
             {
-                callback({'response':"Login Sucess",'token':unique_id,'success':true,'_id':id});
+                if(hash_db == hashed_password)
+                {
+                    callback({'response':"Login Sucess",'token':unique_id,'success':true,'_id':id});
+                }
+                else
+                {
+                    callback({'response':"Invalid Password",'success':false});
+                }
             }
-            else
+            else 
             {
-                callback({'response':"Invalid Password",'success':false});
+                callback({'response':"Your app is outdated",'success':false});
             }
         }
         else 
