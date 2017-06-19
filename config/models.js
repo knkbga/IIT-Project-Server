@@ -5,6 +5,7 @@ var Schema = mongoose.Schema;
 var userSchema = mongoose.Schema({
         "person_credentials" :
         {
+            "status" : String,
             "institute" : String,
             "test_rank" : Number,
             "gender" : String,
@@ -46,6 +47,50 @@ var userSchema = mongoose.Schema({
                     }
                 ],
                 "W_Distraction" :
+                [
+                    {
+                        "start_session" : String,
+                        "end_session" : String,
+                        "point_end" : Number,
+                        "different_events":
+                        [
+                            {
+                                "set_number": Number,
+                                "string_answer" : String,
+                                "string_question" : String,
+                                "lives_till_used" : Number,
+                                "time_of_start" : String,
+                                "time_of_end" : String,
+                                "level ": Number,
+                                "success" : String,
+                                "time_of_submission" : String
+                            }
+                        ]
+                    }
+                ],
+                "Visual" :
+                [
+                    {
+                        "start_session" : String,
+                        "end_session" : String,
+                        "point_end" : Number,
+                        "different_events":
+                        [
+                            {
+                                "set_number": Number,
+                                "string_answer" : String,
+                                "string_question" : String,
+                                "lives_till_used" : Number,
+                                "time_of_start" : String,
+                                "time_of_end" : String,
+                                "level ": Number,
+                                "success" : String,
+                                "time_of_submission" : String
+                            }
+                        ]
+                    }
+                ],
+                "Audio" :
                 [
                     {
                         "start_session" : String,

@@ -23,6 +23,7 @@ exports.register = function(app_code,email,password,name,phone,gender,age,grade_
                     {
                         "person_credentials" :
                         {
+                            "status":"active",
                             "institute" : institute,
                             "test_rank" : test_rank,
                             "gender" : gender,

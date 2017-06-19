@@ -5,10 +5,10 @@ var ObjectId = require('mongodb').ObjectID;
 exports.session = function (w_wo , _id , entry , callback)
 {    
     console.log("\nIn sessions.session\n");
-    if(w_wo==0)//With Distraction Not Gaming
+    if(w_wo==0)//Audio Only
     {
         users.findByIdAndUpdate(ObjectId(_id), 
-        {$push: {"comprehensive_events.trials.W_Distraction": entry}},
+        {$push: {"comprehensive_events.gaming.Audio": entry}},
         {safe: true, upsert: true,new:true},
         function(err, model)
         {
@@ -22,10 +22,10 @@ exports.session = function (w_wo , _id , entry , callback)
             }
         });
     }
-    else if(w_wo==1) //Without Distraction Not Gaming
+    else if(w_wo==1) //Visual Only
     {
         users.findByIdAndUpdate(ObjectId(_id), 
-        {$push: {"comprehensive_events.trials.WO_Distraction": entry}},
+        {$push: {"comprehensive_events.gaming.Visual": entry}},
         {safe: true, upsert: true,new:true},
         function(err, model)
         {

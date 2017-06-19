@@ -64,9 +64,9 @@ module.exports = function(app) {
         });
     });
     
-    app.post('/comprehensive/trial/with' , function(req , res){
+    app.post('/comprehensive/gaming/audio' , function(req , res){
         
-        console.log("/comprehensive/trial/with::\t"+JSON.stringify(req.body));
+        console.log("/comprehensive/gaming/audio::\t"+JSON.stringify(req.body));
         
         var different_events = new Array();
         var _id = req.body._id;
@@ -100,9 +100,9 @@ module.exports = function(app) {
         });
     });
     
-    app.post('/comprehensive/trial/without' , function(req , res){
+    app.post('/comprehensive/gaming/visual' , function(req , res){
         
-        console.log("/comprehensive/trial/without::\t"+JSON.stringify(req.body));
+        console.log("/comprehensive/gaming/visual::\t"+JSON.stringify(req.body));
         
         var different_events = new Array();
         var _id = req.body._id;
