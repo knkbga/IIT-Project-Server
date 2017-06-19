@@ -21,53 +21,6 @@ var userSchema = mongoose.Schema({
         },
         "comprehensive_events":
         {
-            "trials":
-            {
-                "WO_Distraction" :
-                [
-                    {
-                        "start_session": String,
-                        "end_session":String,
-                        "point_end":Number,
-                        "different_events":
-                        [
-                            {
-                                "lives_till_used" : Number,
-                                "set_number": Number ,
-                                "string_answer" : String,
-                                "string_question" : String,
-                                "time_of_start" : String,
-                                "time_of_end" : String,
-                                "level" : Number,
-                                "success" : String,
-                                "time_of_submission" : String
-                            }
-                        ]
-                    }
-                ],
-                "W_Distraction" :
-                [
-                    {
-                        "start_session" : String,
-                        "end_session" : String,
-                        "point_end" : Number,
-                        "different_events":
-                        [
-                            {
-                                "lives_till_used" : Number,
-                                "set_number": Number ,
-                                "string_answer" : String,
-                                "string_question" : String,
-                                "time_of_start" : String,
-                                "time_of_end" : String,
-                                "level" : Number,
-                                "success" : String,
-                                "time_of_submission" : String
-                            }
-                        ]
-                    }
-                ]
-            },
             "gaming" :
             {
                 "WO_Distraction" : 

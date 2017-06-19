@@ -6,7 +6,7 @@ var user = require('../config/models');
 exports.login = function(email,password,app_code,callback) {
 
     console.log("In login.js");
-    if(app_code == "mzf")
+    if(app_code == "")
     {
         user.find({'person_credentials.email': email},function(err,users)
         {
@@ -38,6 +38,6 @@ exports.login = function(email,password,app_code,callback) {
     }
     else 
     {
-        callback({'response':"Your app is outdated",'success':false});
+        callback({'response':"You are not allowed to login yet...",'success':false});
     }
 }
