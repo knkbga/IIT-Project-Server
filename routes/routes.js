@@ -17,7 +17,7 @@ module.exports = function(app) {
        
 //        res.end("Updated app is in progress...");
         console.log("Download requested");
-        var file = __dirname + '/../APK/Digit-Span.apk.apk';
+        var file = __dirname + '/../APK/Digit-Span.apk';
 
         var filename = path.basename(file);
         var mimetype = mime.lookup(file);
