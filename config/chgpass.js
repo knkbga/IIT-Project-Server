@@ -6,8 +6,8 @@ var user = require('../config/models');
  
 var smtpTransport = nodemailer.createTransport("SMTP",{
     auth: {
-        user: "kanakbagga1@gmail.com",
-        pass: "Jyoti Gian"
+        user: "bagga.kanak1@gmail.com",
+        pass: "1Direction"
         }
 });
  
@@ -75,7 +75,7 @@ exports.respass_init = function(email,callback) {
                 console.log("DB Changed.");
                 
                 var mailOptions = {
-                    from: "<kanakbagga1@gmail.com>",
+                    from: "<bagga.kanak1@gmail.com>",
                     to: email,
                     subject: "Reset Password ",
                     text: "Hello "+email+".  Code to reset your Password is "+temp+" .",
