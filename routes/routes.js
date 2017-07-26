@@ -58,8 +58,10 @@ module.exports = function(app) {
         var test_rank = req.body.test_rank;
         var institute = req.body.institute;
         var app_code = req.body.app_code;
+        var dob = req.body.dob;
+        var jeeRollNumber = req.body.jeeRollNumber;
         
-        register.register( app_code , email , password , name , phone , gender , age , grade_10 , sleep_hours , test_rank , institute , function (found) {
+        register.register( app_code , email , password , name , phone , gender , age , grade_10 , sleep_hours , test_rank , institute , dob , jeeRollNumber , function (found) {
             res.json(found);
         });
     });

@@ -5,7 +5,7 @@ var user = require('../config/models');
  
  
  
-exports.register = function(app_code,email,password,name,phone,gender,age,grade_10,sleep_hours,test_rank,institute,callback)
+exports.register = function(app_code,email,password,name,phone,gender,age,grade_10,sleep_hours,test_rank,dob,jeeRollNumber,institute,callback)
 {
     var x = email;
     if(app_code == "mzf") 
@@ -23,6 +23,8 @@ exports.register = function(app_code,email,password,name,phone,gender,age,grade_
                     {
                         "person_credentials" :
                         {
+                            "dob":dob,
+                            "jeeRollNumber":jeeRollNumber,
                             "status":"active",
                             "institute" : institute,
                             "test_rank" : test_rank,
