@@ -47,21 +47,22 @@ module.exports = function(app) {
         
         console.log("Register Params::\t"+JSON.stringify(req.body));
         
-        var email = req.body.email;
-        var password = req.body.password;
-        var name = req.body.name;
-        var phone = req.body.phone;
-        var gender = req.body.gender;
-        var age = req.body.age;
-        var sleep_hours = req.body.sleep_hours;
-        var grade_10 = req.body.grade_10;
-        var test_rank = req.body.test_rank;
-        var institute = req.body.institute;
-        var app_code = req.body.app_code;
-        var dob = req.body.dob;
-        var jeeRollNumber = req.body.jeeRollNumber;
+        var entry = { email : req.body.email,
+        password : req.body.password,
+        name : req.body.name,
+        phone : req.body.phone,
+        gender : req.body.gender,
+        grade_10 : req.body.grade_10,
+        institute : req.body.institute,
+        app_code : req.body.app_code,
+        dob : req.body.dob,
+        jeeRollNumber : req.body.jeeRollNumber,
+        jeeTotalScore : req.body.jeeTotalScore,
+        jeePhysicsScore : req.body.jeePhysicsScore,
+        jeeMathsScore : req.body.jeeMathsScore,
+        jeeChemistryScore : req.body.jeeChemistryScore }
         
-        register.register( app_code , email , password , name , phone , gender , age , grade_10 , sleep_hours , test_rank , institute , dob , jeeRollNumber , function (found) {
+        register.register(entry, function (found) {
             res.json(found);
         });
     });

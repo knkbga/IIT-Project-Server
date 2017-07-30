@@ -1,19 +1,40 @@
 var mongoose = require('mongoose');
  
 var Schema = mongoose.Schema;
- 
+var event_json=
+    {
+        "start_session" : String,
+        "end_session" : String,
+        "point_end" : Number,
+        "different_events":
+        [
+            {
+                "set_number": Number,
+                "string_answer" : String,
+                "string_question" : String,
+                "lives_till_used" : Number,
+                "time_of_start" : String,
+                "time_of_end" : String,
+                "level ": Number,
+                "success" : String,
+                "time_of_submission" : String
+            }
+        ]
+    };
+
 var userSchema = mongoose.Schema({
         "person_credentials" :
         {
             "dob":String,
             "jeeRollNumber":String,
+            "jeeTotalScore":String,
+            "jeePhysicsScore":String,
+            "jeeMathsScore":String,
+            "jeeChemistryScore":String,
             "status" : String,
             "institute" : String,
-            "test_rank" : Number,
             "gender" : String,
-            "age" : Number,
             "grade_10" : Number,
-            "sleep_hours" : Number,
             "temp_str" : String,
             "salt"  : String,
             "token" : String,
@@ -28,96 +49,24 @@ var userSchema = mongoose.Schema({
             {
                 "WO_Distraction" : 
                 [
-                    {
-                        "start_session" : String,
-                        "end_session" : String,
-                        "point_end" : Number,
-                        "different_events":
-                        [
-                            {
-                                "set_number": Number,
-                                "string_answer" : String,
-                                "string_question" : String,
-                                "lives_till_used" : Number,
-                                "time_of_start" : String,
-                                "time_of_end" : String,
-                                "level ": Number,
-                                "success" : String,
-                                "time_of_submission" : String
-                            }
-                        ]
-                    }
+                    event_json
                 ],
                 "W_Distraction" :
                 [
-                    {
-                        "start_session" : String,
-                        "end_session" : String,
-                        "point_end" : Number,
-                        "different_events":
-                        [
-                            {
-                                "set_number": Number,
-                                "string_answer" : String,
-                                "string_question" : String,
-                                "lives_till_used" : Number,
-                                "time_of_start" : String,
-                                "time_of_end" : String,
-                                "level ": Number,
-                                "success" : String,
-                                "time_of_submission" : String
-                            }
-                        ]
-                    }
+                    event_json
                 ],
                 "Visual" :
                 [
-                    {
-                        "start_session" : String,
-                        "end_session" : String,
-                        "point_end" : Number,
-                        "different_events":
-                        [
-                            {
-                                "set_number": Number,
-                                "string_answer" : String,
-                                "string_question" : String,
-                                "lives_till_used" : Number,
-                                "time_of_start" : String,
-                                "time_of_end" : String,
-                                "level ": Number,
-                                "success" : String,
-                                "time_of_submission" : String
-                            }
-                        ]
-                    }
+                    event_json
                 ],
                 "Audio" :
                 [
-                    {
-                        "start_session" : String,
-                        "end_session" : String,
-                        "point_end" : Number,
-                        "different_events":
-                        [
-                            {
-                                "set_number": Number,
-                                "string_answer" : String,
-                                "string_question" : String,
-                                "lives_till_used" : Number,
-                                "time_of_start" : String,
-                                "time_of_end" : String,
-                                "level ": Number,
-                                "success" : String,
-                                "time_of_submission" : String
-                            }
-                        ]
-                    }
+                    event_json
                 ]
             }
         }
     });
 
-mongoose.connect('mongodb://mzf:1Direction@ds129422.mlab.com:29422/muzaffarnagar');
+mongoose.connect('mongodb://iit:1Direction@ds129003.mlab.com:29003/iit_delhi');
 //mongoose.connect('mongodb://localhost/test');
 module.exports = mongoose.model('users', userSchema);

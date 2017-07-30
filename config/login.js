@@ -6,7 +6,7 @@ var user = require('../config/models');
 exports.login = function(email,password,app_code,callback) {
 
     console.log("In login.js");
-    if(app_code == "mzf")
+    if(app_code == "iit")
     {
         user.find({'person_credentials.email': email},function(err,users)
         {

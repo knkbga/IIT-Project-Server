@@ -5,10 +5,10 @@ var user = require('../config/models');
  
  
  
-exports.register = function(app_code,email,password,name,phone,gender,age,grade_10,sleep_hours,test_rank,institute,dob,jeeRollNumber,callback)
+exports.register = function(entry,callback)
 {
     var x = email;
-    if(app_code == "mzf") 
+    if(app_code == "iit") 
     {
         if(!(x.indexOf("@")==x.length))
         {        
@@ -19,25 +19,26 @@ exports.register = function(app_code,email,password,name,phone,gender,age,grade_
                 var token = crypto.createHash('sha512').update(email +rand).digest("hex");
                 var hashed_password = crypto.createHash('sha512').update(newpass).digest("hex");
 
-                var newuser = new user(  
+                var newuser = new user(
                     {
                         "person_credentials" :
                         {
-                            "dob":dob,
-                            "jeeRollNumber":jeeRollNumber,
+                            "dob":entry.dob,
+                            "jeeRollNumber":entry.jeeRollNumber,
+                            "jeeTotalScore":entry.jeeTotalScore,
+                            "jeePhysicsScore":entry.jeePhysicsScore,
+                            "jeeMathsScore":entry.jeeMathsScore,
+                            "jeeChemistryScore":entry.jeeChemistryScore,
                             "status":"active",
-                            "institute" : institute,
-                            "test_rank" : test_rank,
-                            "gender" : gender,
-                            "age" : age,
-                            "grade_10" : grade_10,
-                            "sleep_hours" : sleep_hours,
+                            "institute" : entry.institute,
+                            "gender" : entry.gender,
+                            "grade_10" : entry.grade_10,
                             "temp_str" : "",
-                            "salt"  : temp,
-                            "token" : token,
-                            "name"  : name,
-                            "email" : email,
-                            "phone" : phone,
+                            "salt"  : entry.temp,
+                            "token" : entry.token,
+                            "name"  : entry.name,
+                            "email" : entry.email,
+                            "phone" : entry.phone,
                             "hashed_password" : hashed_password
                         }
                     }
