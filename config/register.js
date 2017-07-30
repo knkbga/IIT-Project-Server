@@ -7,10 +7,15 @@ var user = require('../config/models');
  
 exports.register = function(entry,callback)
 {
-    var x = email;
+    console.log(JSON.stringify(entry));
+    
+    var email = entry.email;
+    var app_code = entry.app_code;
+    var password = entry.password;
+    
     if(app_code == "iit") 
     {
-        if(!(x.indexOf("@")==x.length))
+        if(!(email.indexOf("@")==email.length))
         {        
             if (password.length > 4)
             {
@@ -34,7 +39,7 @@ exports.register = function(entry,callback)
                             "gender" : entry.gender,
                             "grade_10" : entry.grade_10,
                             "temp_str" : "",
-                            "salt"  : entry.temp,
+                            "salt" : temp,
                             "token" : entry.token,
                             "name"  : entry.name,
                             "email" : entry.email,
