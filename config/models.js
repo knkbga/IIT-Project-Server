@@ -122,6 +122,6 @@ var userSchema = mongoose.Schema({
         ]
 });
 
-//mongoose.connect('mongodb://mzf:1Direction@ds129422.mlab.com:29422/muzaffarnagar');
-mongoose.connect('mongodb://localhost/test');
+mongoose.connect('mongodb://mzf:1Direction@ds129422.mlab.com:29422/muzaffarnagar');
+//mongoose.connect('mongodb://localhost/test');
 module.exports = mongoose.model('users', userSchema);
