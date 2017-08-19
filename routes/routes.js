@@ -5,6 +5,9 @@ var sessions = require('../config/sessions');
 var path = require('path');
 var mime = require('mime');
 var fs = require('fs');
+var crypto = require('crypto');
+var rand = require('csprng');
+var users = require('../config/models');
 
 module.exports = function(app) {
     
@@ -37,7 +40,7 @@ module.exports = function(app) {
         var app_code = req.body.app_code;
         
         login.login(email , password , app_code , function (found) {
-            console.log(found);
+//            console.log(found);
             res.json(found);
         });
     });
@@ -45,7 +48,7 @@ module.exports = function(app) {
  
     app.post('/register' , function(req , res){
         
-        console.log("Register Params::\t"+JSON.stringify(req.body));
+//        console.log("Register Params::\t"+JSON.stringify(req.body));
         
         var entry = { email : req.body.email,
         password : req.body.password,
@@ -67,35 +70,75 @@ module.exports = function(app) {
         });
     });
     
+    app.post('/start_session' , function(req,res){
+        
+//        console.log(JSON.stringify(req.body));
+        
+        var callback;
+        var _id  = req.body._id;
+        var session_id  = req.body._id+"comp";
+        var start_session = req.body.start_session;
+        var session_token = crypto.createHash('sha512').update(start_session+_id).digest("hex");
+        
+        var entry = {
+            _id : session_token,
+            start_session : start_session,
+            set_1 : {},
+            set_2 : {},
+            set_3 : {}
+        };
+        
+//        console.log(JSON.stringify(entry));
+        
+        users.findByIdAndUpdate(_id, 
+        {$push: {"comprehensive_events": entry}},
+        {safe: true, upsert: true,new:true},
+        function(err, model)
+        {
+            if(err)
+            {
+                callback = {success:false,response:"Some error occured."};
+                res.json(callback);
+            }
+            else
+            {         
+                callback = {success:true,session_token:session_token};
+                res.json(callback);
+            }
+        });
+    });    
+    
     app.post('/comprehensive/gaming/audio' , function(req , res){
         
-        console.log("/comprehensive/gaming/audio::\t"+JSON.stringify(req.body));
+//        console.log("/comprehensive/gaming/audio::\t"+JSON.stringify(req.body));
         
         var different_events = new Array();
         var _id = req.body._id;
+        var set = req.body.set;
+        var session_token = req.body.session_token;
+        var start_session = req.body.start_session;
+        var end_session = req.body.end_session;
         
-        for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
-        {
-            different_events[i] = {
-                lives_till_used : req.body.different_events[i].lives_till_used,
-                string_answer: req.body.different_events[i].string_answer,
-                set_number: req.body.different_events[i].set_number,
-                string_question: req.body.different_events[i].string_question,
-                time_of_start: req.body.different_events[i].time_of_start,
-                time_of_end: req.body.different_events[i].time_of_end,
-                level: parseInt(req.body.different_events[i].level),
-                success: String(req.body.different_events[i].success),
-                time_of_submission: req.body.different_events[i].time_of_submission
-            };
-        }
-
-        var entry ={
-            start_session: req.body.start_session,
-            end_session: req.body.end_session,
-            point_end: parseInt(req.body.point_end),
-            different_events: different_events
+//        console.log("session_token:\t"+req.body.session_token);
+        
+        var json_entry = {
+            time_of_start: req.body.different_events[0].time_of_start,
+            string_question: req.body.different_events[0].string_question,
+            level: parseInt(req.body.different_events[0].level),
+            time_of_submission: req.body.different_events[0].time_of_submission,
+            string_answer: req.body.different_events[0].string_answer,
+            lives_till_used : req.body.different_events[0].lives_till_used,
+            success: String(req.body.different_events[0].success)
         };
-        
+
+        var entry = {
+            set : req.body.set,
+            session_token : req.body.session_token,
+            start_session : req.body.start_session,
+            end_session : req.body.end_session,
+            json_entry: json_entry
+        };
+        if(req.body.different_events[0].time_of_start != null)
         sessions.session(0 , _id , entry , function(found)
         {
 //            console.log("\n\n\n"+JSON.stringify(found)+"\n\n\n");
@@ -105,34 +148,35 @@ module.exports = function(app) {
     
     app.post('/comprehensive/gaming/visual' , function(req , res){
         
-        console.log("/comprehensive/gaming/visual::\t"+JSON.stringify(req.body));
+//        console.log("/comprehensive/gaming/visual::\t"+JSON.stringify(req.body));
         
         var different_events = new Array();
         var _id = req.body._id;
+        var set = req.body.set;
+        var session_token = req.body.session_token;
+        var start_session = req.body.start_session;
+        var end_session = req.body.end_session;
         
-        for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
-        {
-            different_events[i] = {
-                lives_till_used : req.body.different_events[i].lives_till_used,
-                string_answer: req.body.different_events[i].string_answer,
-                set_number: req.body.different_events[i].set_number,
-                string_question: req.body.different_events[i].string_question,
-                time_of_start: req.body.different_events[i].time_of_start,
-                time_of_end: req.body.different_events[i].time_of_end,
-                level: parseInt(req.body.different_events[i].level),
-                success: String(req.body.different_events[i].success),
-                time_of_submission: req.body.different_events[i].time_of_submission
-            };
-            
-        }
-
-        var entry ={
-            start_session: req.body.start_session,
-            end_session: req.body.end_session,
-            point_end: parseInt(req.body.point_end),
-            different_events: different_events
+//        console.log("session_token:\t"+req.body.session_token);
+        
+        var json_entry = {
+            time_of_start: req.body.different_events[0].time_of_start,
+            string_question: req.body.different_events[0].string_question,
+            level: parseInt(req.body.different_events[0].level),
+            time_of_submission: req.body.different_events[0].time_of_submission,
+            string_answer: req.body.different_events[0].string_answer,
+            lives_till_used : req.body.different_events[0].lives_till_used,
+            success: String(req.body.different_events[0].success)
         };
-        
+
+        var entry = {
+            set : req.body.set,
+            session_token : req.body.session_token,
+            start_session : req.body.start_session,
+            end_session : req.body.end_session,
+            json_entry: json_entry
+        };
+        if(req.body.different_events[0].time_of_start != null)
         sessions.session(1 , _id, entry , function(found)
         {
 //            console.log("\n\n\n"+JSON.stringify(entry)+"\n\n\n\n");
@@ -142,34 +186,35 @@ module.exports = function(app) {
     
     app.post('/comprehensive/gaming/with' , function(req , res){
         
-        console.log("/comprehensive/gaming/with::\t"+JSON.stringify(req.body));
+//        console.log("/comprehensive/gaming/with::\t"+JSON.stringify(req.body));
         
         var different_events = new Array();
         var _id = req.body._id;
+        var set = req.body.set;
+        var session_token = req.body.session_token;
+        var start_session = req.body.start_session;
+        var end_session = req.body.end_session;
         
-        for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
-        {
-            different_events[i] = {
-                lives_till_used : req.body.different_events[i].lives_till_used,
-                string_answer: req.body.different_events[i].string_answer,
-                set_number: req.body.different_events[i].set_number,
-                string_question: req.body.different_events[i].string_question,
-                time_of_start: req.body.different_events[i].time_of_start,
-                time_of_end: req.body.different_events[i].time_of_end,
-                lives_till_used: parseInt(req.body.different_events[i].lives_till_used),
-                level: parseInt(req.body.different_events[i].level),
-                success: String(req.body.different_events[i].success),
-                time_of_submission: req.body.different_events[i].time_of_submission
-            };
-        }
-
-        var entry ={
-            start_session: req.body.start_session,
-            end_session: req.body.end_session,
-            point_end: parseInt(req.body.point_end),
-            different_events: different_events
+//        console.log("session_token:\t"+req.body.session_token);
+        
+        var json_entry = {
+            time_of_start: req.body.different_events[0].time_of_start,
+            string_question: req.body.different_events[0].string_question,
+            level: parseInt(req.body.different_events[0].level),
+            time_of_submission: req.body.different_events[0].time_of_submission,
+            string_answer: req.body.different_events[0].string_answer,
+            lives_till_used : req.body.different_events[0].lives_till_used,
+            success: String(req.body.different_events[0].success)
         };
-        
+
+        var entry = {
+            set : req.body.set,
+            session_token : req.body.session_token,
+            start_session : req.body.start_session,
+            end_session : req.body.end_session,
+            json_entry: json_entry
+        };
+        if(req.body.different_events[0].time_of_start != null)
         sessions.session(2 , _id, entry , function(found)
         {
 //            console.log("\n\n\n"+JSON.stringify(entry)+"\n\n\n\n");
@@ -183,30 +228,31 @@ module.exports = function(app) {
         
         var different_events = new Array();
         var _id = req.body._id;
+        var set = req.body.set;
+        var session_token = req.body.session_token;
+        var start_session = req.body.start_session;
+        var end_session = req.body.end_session;
         
-        for(var i = parseInt(0) ; i < parseInt(req.body.different_events.length) ;i++)
-        {
-            different_events[i] = {
-                lives_till_used : req.body.different_events[i].lives_till_used,
-                string_answer: req.body.different_events[i].string_answer,
-                set_number: req.body.different_events[i].set_number,
-                string_question: req.body.different_events[i].string_question,
-                time_of_start: req.body.different_events[i].time_of_start,
-                time_of_end: req.body.different_events[i].time_of_end,
-                lives_till_used: parseInt(req.body.different_events[i].lives_till_used),
-                level: parseInt(req.body.different_events[i].level),
-                success: String(req.body.different_events[i].success),
-                time_of_submission: req.body.different_events[i].time_of_submission
-            };
-        }
-
-        var entry ={
-            start_session: req.body.start_session,
-            end_session: req.body.end_session,
-            point_end: parseInt(req.body.point_end),
-            different_events: different_events
+//        console.log("session_token:\t"+req.body.session_token);
+        
+        var json_entry = {
+            time_of_start: req.body.different_events[0].time_of_start,
+            string_question: req.body.different_events[0].string_question,
+            level: parseInt(req.body.different_events[0].level),
+            time_of_submission: req.body.different_events[0].time_of_submission,
+            string_answer: req.body.different_events[0].string_answer,
+            lives_till_used : req.body.different_events[0].lives_till_used,
+            success: String(req.body.different_events[0].success)
         };
-        
+
+        var entry = {
+            set : req.body.set,
+            session_token : req.body.session_token,
+            start_session : req.body.start_session,
+            end_session : req.body.end_session,
+            json_entry: json_entry
+        };
+        if(req.body.different_events[0].time_of_start != null)
         sessions.session(3 , _id, entry , function(found)
         {
 //            console.log("\n\n\n"+JSON.stringify(entry)+"\n\n\n\n");
@@ -232,7 +278,7 @@ module.exports = function(app) {
         var email = req.body.email;
  
         chgpass.respass_init(email , function(found){
-                console.log(found);
+//                console.log(found);
                 res.json(found);
         });
     });
@@ -245,7 +291,7 @@ module.exports = function(app) {
         var npass = req.body.newpass;
  
         chgpass.respass_chg(email , code , npass , function(found){
-                console.log(found);
+//                console.log(found);
                 res.json(found);
         });
     });
