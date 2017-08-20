@@ -1,26 +1,99 @@
 var mongoose = require('mongoose');
  
-var Schema = mongoose.Schema;
-var event_json=
+var json_entry = 
     {
-        "start_session" : String,
-        "end_session" : String,
-        "point_end" : Number,
-        "different_events":
-        [
-            {
-                "set_number": Number,
-                "string_answer" : String,
-                "string_question" : String,
-                "lives_till_used" : Number,
-                "time_of_start" : String,
-                "time_of_end" : String,
-                "level ": Number,
-                "success" : String,
-                "time_of_submission" : String
-            }
-        ]
+        "_id":String,
+        "time_of_start" : String,
+        "string_question" : String,
+        "level ": Number,
+        "time_of_submission" : String,
+        "string_answer" : String,
+        "lives_till_used" : Number,
+        "success" : String
     };
+
+var WO_Distraction_schema = new mongoose.Schema(
+    json_entry
+);
+
+var W_Distraction_schema = new mongoose.Schema(
+    json_entry
+);
+
+var Visual_schema = new mongoose.Schema(
+    json_entry
+);
+
+var Audio_schema = new mongoose.Schema(
+    json_entry
+);
+
+
+var comprehensive_events_schema = new mongoose.Schema(
+    {
+        "_id":String,
+        "session_score":Number,
+        "start_session":String,
+        "end_session" : String,
+        "set_1":
+        {
+            "WO_Distraction" :
+            [
+                WO_Distraction_schema
+            ],
+            "W_Distraction" :
+            [
+                W_Distraction_schema
+            ],
+            "Visual" :
+            [
+                Visual_schema
+            ],
+            "Audio" :
+            [
+                Audio_schema
+            ]                   
+        },
+        "set_2":
+        {
+            "WO_Distraction" :
+            [
+                WO_Distraction_schema
+            ],
+            "W_Distraction" :
+            [
+                W_Distraction_schema
+            ],
+            "Visual" :
+            [
+                Visual_schema
+            ],
+            "Audio" :
+            [
+                Audio_schema
+            ]                 
+        },
+        "set_3":
+        {
+            "WO_Distraction" :
+            [
+                WO_Distraction_schema
+            ],
+            "W_Distraction" :
+            [
+                W_Distraction_schema
+            ],
+            "Visual" :
+            [
+                Visual_schema
+            ],
+            "Audio" :
+            [
+                Audio_schema
+            ]                  
+        },
+    }
+);
 
 var userSchema = mongoose.Schema({
         "person_credentials" :
@@ -37,35 +110,16 @@ var userSchema = mongoose.Schema({
             "grade_10" : Number,
             "temp_str" : String,
             "salt"  : String,
-            "token" : String,
             "name"  : String,
             "email" : String,
             "phone" : Number,
-            "hashed_password" : String
+            "hashed_password" : String,
         },
         "comprehensive_events":
-        {
-            "gaming" :
-            {
-                "WO_Distraction" :
-                [
-                    event_json
-                ],
-                "W_Distraction" :
-                [
-                    event_json
-                ],
-                "Visual" :
-                [
-                    event_json
-                ],
-                "Audio" :
-                [
-                    event_json
-                ]
-            }
-        }
-    });
+        [
+            comprehensive_events_schema   
+        ]
+});
 
 mongoose.connect('mongodb://iit:1Direction@ds129003.mlab.com:29003/iit_delhi');
 //mongoose.connect('mongodb://localhost/test');

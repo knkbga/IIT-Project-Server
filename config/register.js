@@ -28,6 +28,7 @@ exports.register = function(entry,callback)
                     {
                         "person_credentials" :
                         {
+                            "token":token,
                             "dob":entry.dob,
                             "jeeRollNumber":entry.jeeRollNumber,
                             "jeeTotalScore":entry.jeeTotalScore,
