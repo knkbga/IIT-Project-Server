@@ -35,7 +35,6 @@ var comprehensive_events_schema = new mongoose.Schema(
         "session_score":Number,
         "start_session":String,
         "end_session" : String,
-        "set_end" : Number,
         "set_1":
         {
             "WO_Distraction" :
@@ -122,6 +121,6 @@ var userSchema = mongoose.Schema({
         ]
 });
 
-mongoose.connect('mongodb://mzf:1Direction@ds129422.mlab.com:29422/muzaffarnagar');
+mongoose.connect('mongodb://iit:1Direction@ds129003.mlab.com:29003/iit_delhi');
 //mongoose.connect('mongodb://localhost/test');
 module.exports = mongoose.model('users', userSchema);

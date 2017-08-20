@@ -25,7 +25,6 @@ var userSchema = mongoose.Schema({
                 "session_score":Number,
                 "start_session":String,
                 "end_session" : String,
-                "set_end" : Number,
                 "set_1":
                 {
                     "WO_Distraction" :

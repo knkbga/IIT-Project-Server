@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 exports.session = function (w_wo , _id , entry , callback)
 {    
-    console.log("\n\n\n\n\n\t\t\t\t\t"+"entry :\t"+JSON.stringify(entry)+"\n\n\n\n\n");
+//    console.log("\n\n\n\n\n\t\t\t\t\t"+"entry :\t"+JSON.stringify(entry)+"\n\n\n\n\n");
     
     if(w_wo==3) //Without Distraction
     {
@@ -14,7 +14,10 @@ exports.session = function (w_wo , _id , entry , callback)
                 _id : ObjectId(_id)
             }
         ).exec(
-            function(err,instance){                
+            function(err,instance){
+                
+                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry.time_of_submission});
+                
                 switch(entry.set)
                 {
                     case 1:
@@ -80,6 +83,9 @@ exports.session = function (w_wo , _id , entry , callback)
             }
         ).exec(
             function(err,instance){
+                
+                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry.time_of_submission});
+                
                 switch(entry.set)
                 {
                     case 1:
@@ -145,6 +151,9 @@ exports.session = function (w_wo , _id , entry , callback)
             }
         ).exec(
             function(err,instance){
+                
+                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry.time_of_submission});
+                
                 switch(entry.set)
                 {
                     case 1:
@@ -210,6 +219,9 @@ exports.session = function (w_wo , _id , entry , callback)
             }
         ).exec(
             function(err,instance){
+                
+                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry.time_of_submission});
+                
                 switch(entry.set)
                 {
                     case 1:
