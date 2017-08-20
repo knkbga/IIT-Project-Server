@@ -13,7 +13,7 @@ module.exports = function(app) {
     
     app.get('/' ,  function(req ,  res) {
         console.log("Get Requested");
-        res.end("Node-Android-Project");
+        res.end("Node-Android-Project(IIT)");
     });
 
     app.get('/download' , function(req,res){
