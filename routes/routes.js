@@ -128,6 +128,7 @@ module.exports = function(app) {
             time_of_submission: req.body.different_events[0].time_of_submission,
             string_answer: req.body.different_events[0].string_answer,
             lives_till_used : req.body.different_events[0].lives_till_used,
+            total_volume : req.body.different_events[0].total_volume,
             success: String(req.body.different_events[0].success)
         };
 
@@ -166,6 +167,7 @@ module.exports = function(app) {
             time_of_submission: req.body.different_events[0].time_of_submission,
             string_answer: req.body.different_events[0].string_answer,
             lives_till_used : req.body.different_events[0].lives_till_used,
+            total_volume : req.body.different_events[0].total_volume,
             success: String(req.body.different_events[0].success)
         };
 
@@ -186,7 +188,7 @@ module.exports = function(app) {
     
     app.post('/comprehensive/gaming/with' , function(req , res){
         
-//        console.log("/comprehensive/gaming/with::\t"+JSON.stringify(req.body));
+        console.log("\n\n\n\n\n\n\t\t\t\t\t\t /comprehensive/gaming/with:\t\t"+JSON.stringify(req.body)+"\n\n\n\n\n");
         
         var different_events = new Array();
         var _id = req.body._id;
@@ -204,6 +206,7 @@ module.exports = function(app) {
             time_of_submission: req.body.different_events[0].time_of_submission,
             string_answer: req.body.different_events[0].string_answer,
             lives_till_used : req.body.different_events[0].lives_till_used,
+            total_volume : req.body.different_events[0].total_volume,
             success: String(req.body.different_events[0].success)
         };
 
@@ -242,6 +245,7 @@ module.exports = function(app) {
             time_of_submission: req.body.different_events[0].time_of_submission,
             string_answer: req.body.different_events[0].string_answer,
             lives_till_used : req.body.different_events[0].lives_till_used,
+            total_volume : req.body.different_events[0].total_volume,
             success: String(req.body.different_events[0].success)
         };
 

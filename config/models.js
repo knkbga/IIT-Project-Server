@@ -9,6 +9,7 @@ var json_entry =
         "time_of_submission" : String,
         "string_answer" : String,
         "lives_till_used" : Number,
+        "total_volume":String,
         "success" : String
     };
 
@@ -21,7 +22,16 @@ var W_Distraction_schema = new mongoose.Schema(
 );
 
 var Visual_schema = new mongoose.Schema(
-    json_entry
+    {
+        "_id":String,
+        "time_of_start" : String,
+        "string_question" : String,
+        "level ": Number,
+        "time_of_submission" : String,
+        "string_answer" : String,
+        "lives_till_used" : Number,
+        "success" : String
+    }
 );
 
 var Audio_schema = new mongoose.Schema(

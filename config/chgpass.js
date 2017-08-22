@@ -85,7 +85,7 @@ exports.respass_init = function(email,callback) {
                 {
                     if(error)
                     {
-                        console.log("Email sent");
+                        console.log("Email not sent");
                         callback({'response':"Error While Resetting password. Try Again !",'success':false});
                     }
                     else

@@ -37,6 +37,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ],
@@ -50,6 +51,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ],
@@ -76,6 +78,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ]             
@@ -92,6 +95,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ],
@@ -105,6 +109,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ],
@@ -131,6 +136,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ] 
@@ -147,6 +153,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ],
@@ -160,6 +167,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ],
@@ -186,6 +194,7 @@ var userSchema = mongoose.Schema({
                             "time_of_submission" : String,
                             "string_answer" : String,
                             "lives_till_used" : Number,
+                            "total_volume":String,
                             "success" : String
                         }
                     ]                   
