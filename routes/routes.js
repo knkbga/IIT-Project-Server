@@ -121,16 +121,20 @@ module.exports = function(app) {
         
 //        console.log("session_token:\t"+req.body.session_token);
         
-        var json_entry = {
-            time_of_start: req.body.different_events[0].time_of_start,
-            string_question: req.body.different_events[0].string_question,
-            level: parseInt(req.body.different_events[0].level),
-            time_of_submission: req.body.different_events[0].time_of_submission,
-            string_answer: req.body.different_events[0].string_answer,
-            lives_till_used : req.body.different_events[0].lives_till_used,
-            total_volume : req.body.different_events[0].total_volume,
-            success: String(req.body.different_events[0].success)
-        };
+        var json_entry = [];
+        for (var i=0;i<req.body.different_events.length;i++)
+        {
+            json_entry.push({
+                time_of_start: req.body.different_events[i].time_of_start,
+                string_question: req.body.different_events[i].string_question,
+                level: parseInt(req.body.different_events[i].level),
+                time_of_submission: req.body.different_events[i].time_of_submission,
+                string_answer: req.body.different_events[i].string_answer,
+                lives_till_used : req.body.different_events[i].lives_till_used,
+                total_volume : req.body.different_events[i].total_volume,
+                success: String(req.body.different_events[i].success)
+            });
+        }
 
         var entry = {
             set : req.body.set,
@@ -160,16 +164,20 @@ module.exports = function(app) {
         
 //        console.log("session_token:\t"+req.body.session_token);
         
-        var json_entry = {
-            time_of_start: req.body.different_events[0].time_of_start,
-            string_question: req.body.different_events[0].string_question,
-            level: parseInt(req.body.different_events[0].level),
-            time_of_submission: req.body.different_events[0].time_of_submission,
-            string_answer: req.body.different_events[0].string_answer,
-            lives_till_used : req.body.different_events[0].lives_till_used,
-            total_volume : req.body.different_events[0].total_volume,
-            success: String(req.body.different_events[0].success)
-        };
+        var json_entry = [];
+        for (var i=0;i<req.body.different_events.length;i++)
+        {
+            json_entry.push({
+                time_of_start: req.body.different_events[i].time_of_start,
+                string_question: req.body.different_events[i].string_question,
+                level: parseInt(req.body.different_events[i].level),
+                time_of_submission: req.body.different_events[i].time_of_submission,
+                string_answer: req.body.different_events[i].string_answer,
+                lives_till_used : req.body.different_events[i].lives_till_used,
+                total_volume : req.body.different_events[i].total_volume,
+                success: String(req.body.different_events[i].success)
+            });
+        }
 
         var entry = {
             set : req.body.set,
@@ -199,16 +207,20 @@ module.exports = function(app) {
         
 //        console.log("session_token:\t"+req.body.session_token);
         
-        var json_entry = {
-            time_of_start: req.body.different_events[0].time_of_start,
-            string_question: req.body.different_events[0].string_question,
-            level: parseInt(req.body.different_events[0].level),
-            time_of_submission: req.body.different_events[0].time_of_submission,
-            string_answer: req.body.different_events[0].string_answer,
-            lives_till_used : req.body.different_events[0].lives_till_used,
-            total_volume : req.body.different_events[0].total_volume,
-            success: String(req.body.different_events[0].success)
-        };
+        var json_entry = [];
+        for (var i=0;i<req.body.different_events.length;i++)
+        {
+            json_entry.push({
+                time_of_start: req.body.different_events[i].time_of_start,
+                string_question: req.body.different_events[i].string_question,
+                level: parseInt(req.body.different_events[i].level),
+                time_of_submission: req.body.different_events[i].time_of_submission,
+                string_answer: req.body.different_events[i].string_answer,
+                lives_till_used : req.body.different_events[i].lives_till_used,
+                total_volume : req.body.different_events[i].total_volume,
+                success: String(req.body.different_events[i].success)
+            });
+        }
 
         var entry = {
             set : req.body.set,
@@ -238,17 +250,23 @@ module.exports = function(app) {
         
 //        console.log("session_token:\t"+req.body.session_token);
         
-        var json_entry = {
-            time_of_start: req.body.different_events[0].time_of_start,
-            string_question: req.body.different_events[0].string_question,
-            level: parseInt(req.body.different_events[0].level),
-            time_of_submission: req.body.different_events[0].time_of_submission,
-            string_answer: req.body.different_events[0].string_answer,
-            lives_till_used : req.body.different_events[0].lives_till_used,
-            total_volume : req.body.different_events[0].total_volume,
-            success: String(req.body.different_events[0].success)
-        };
+        var json_entry = [];
+        for (var i=0;i<req.body.different_events.length;i++)
+        {
+            json_entry.push({
+                time_of_start: req.body.different_events[i].time_of_start,
+                string_question: req.body.different_events[i].string_question,
+                level: parseInt(req.body.different_events[i].level),
+                time_of_submission: req.body.different_events[i].time_of_submission,
+                string_answer: req.body.different_events[i].string_answer,
+                lives_till_used : req.body.different_events[i].lives_till_used,
+                total_volume : req.body.different_events[i].total_volume,
+                success: String(req.body.different_events[i].success)
+            });
+        }
 
+//        console.log("\n\n\n\n\n\n"+JSON.stringify(json_entry));
+        
         var entry = {
             set : req.body.set,
             session_token : req.body.session_token,

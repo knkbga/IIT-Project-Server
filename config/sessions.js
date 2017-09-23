@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectID;
 
 exports.session = function (w_wo , _id , entry , callback)
 {    
-//    console.log("\n\n\n\n\n\t\t\t\t\t"+"entry :\t"+JSON.stringify(entry)+"\n\n\n\n\n");
+    console.log("\n\n\n\n\n\t\t\t\t\t"+"entry :\t"+JSON.stringify(entry)+"\n\n\n\n\n");
     
     if(w_wo==3) //Without Distraction
     {
@@ -16,13 +16,14 @@ exports.session = function (w_wo , _id , entry , callback)
         ).exec(
             function(err,instance){
                 
-                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry.time_of_submission});
+                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
                 switch(entry.set)
                 {
                     case 1:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_1.WO_Distraction.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_1.WO_Distraction.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -39,7 +40,8 @@ exports.session = function (w_wo , _id , entry , callback)
                     break;
                     case 2:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_2.WO_Distraction.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_2.WO_Distraction.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -56,7 +58,8 @@ exports.session = function (w_wo , _id , entry , callback)
                     break;
                     case 3:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_3.WO_Distraction.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_3.WO_Distraction.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -84,13 +87,14 @@ exports.session = function (w_wo , _id , entry , callback)
         ).exec(
             function(err,instance){
                 
-                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry.time_of_submission});
+                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
                 switch(entry.set)
                 {
                     case 1:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_1.Audio.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_1.Audio.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -107,7 +111,8 @@ exports.session = function (w_wo , _id , entry , callback)
                     break;
                     case 2:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_2.Audio.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_2.Audio.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -124,7 +129,8 @@ exports.session = function (w_wo , _id , entry , callback)
                     break;
                     case 3:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_3.Audio.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_3.Audio.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -152,13 +158,14 @@ exports.session = function (w_wo , _id , entry , callback)
         ).exec(
             function(err,instance){
                 
-                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry.time_of_submission});
+                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
                 switch(entry.set)
                 {
                     case 1:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_1.Visual.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_1.Visual.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -175,7 +182,8 @@ exports.session = function (w_wo , _id , entry , callback)
                     break;
                     case 2:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_2.Visual.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_2.Visual.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -192,7 +200,8 @@ exports.session = function (w_wo , _id , entry , callback)
                     break;
                     case 3:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_3.Visual.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_3.Visual.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -220,13 +229,14 @@ exports.session = function (w_wo , _id , entry , callback)
         ).exec(
             function(err,instance){
                 
-                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry.time_of_submission});
+                instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
                 switch(entry.set)
                 {
                     case 1:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_1.W_Distraction.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_1.W_Distraction.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -243,7 +253,8 @@ exports.session = function (w_wo , _id , entry , callback)
                     break;
                     case 2:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_2.W_Distraction.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_2.W_Distraction.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {
@@ -260,7 +271,8 @@ exports.session = function (w_wo , _id , entry , callback)
                     break;
                     case 3:
                     {
-                        instance.comprehensive_events.id(entry.session_token).set_3.W_Distraction.push(entry.json_entry)
+                        for(var i=0;i<entry.json_entry.length;i++)
+                        instance.comprehensive_events.id(entry.session_token).set_3.W_Distraction.push(entry.json_entry[i])
                         instance.save(function(err,model){
                             if(err)
                             {

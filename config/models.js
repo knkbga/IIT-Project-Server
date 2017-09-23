@@ -131,6 +131,6 @@ var userSchema = mongoose.Schema({
         ]
 });
 
-mongoose.connect('mongodb://iit:1Direction@ds129003.mlab.com:29003/iit_delhi');
-//mongoose.connect('mongodb://localhost/test');
+//mongoose.connect('mongodb://iit:1Direction@ds129003.mlab.com:29003/iit_delhi');
+mongoose.connect('mongodb://localhost/test');
 module.exports = mongoose.model('users', userSchema);
