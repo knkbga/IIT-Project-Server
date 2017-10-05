@@ -1,24 +1,53 @@
-var chgpass = require('../config/chgpass');
-var register = require('../config/register');
-var login = require('../config/login');
-var sessions = require('../config/sessions');
-var path = require('path');
-var mime = require('mime');
-var fs = require('fs');
-var crypto = require('crypto');
-var rand = require('csprng');
-var users = require('../config/models');
+/*
+---------------------------------------------- 
+    Node Modules 
+----------------------------------------------
+*/
+var path         = require('path');
+var mime         = require('mime');
+var fs           = require('fs');
+var crypto       = require('crypto');
+var rand         = require('csprng');
 
+/*
+---------------------------------------------- 
+    Glboals 
+---------------------------------------------- 
+*/
+var Globals      = require("../Globals/variables");
+
+/*
+---------------------------------------------- 
+    Models 
+---------------------------------------------- 
+*/
+var users        = require('../Models/userModel');
+var versions      = require('../Models/versionModel');
+
+/*
+---------------------------------------------- 
+    API redirects 
+----------------------------------------------
+*/
+var chgpass     = require('../API/Authenticity/chgpass');
+var register    = require('../API/Authenticity/register');
+var login       = require('../API/Authenticity/login');
+var sessions    = require('../API/Sessions/sessions');
+
+/*
+Route functions
+*/
 module.exports = function(app) {
     
+    // Simple get html
     app.get('/' ,  function(req ,  res) {
         console.log("Get Requested");
         res.end("Node-Android-Project(IIT)");
     });
-
+    
+    // API to dowload APK
     app.get('/download' , function(req,res){
        
-//        res.end("Updated app is in progress...");
         console.log("Download requested");
         var file = __dirname + '/../APK/Digit-span.apk';
 
@@ -33,6 +62,13 @@ module.exports = function(app) {
         
     });
     
+    //API to update APK
+    app.post('/api/update' , function(req,res) {
+        var curr_version = req.body.version;
+        versions.
+    });
+    
+    // API to login
     app.post('/login' , function(req , res){
         console.log("In login");
         var email = req.body.email;
@@ -45,7 +81,7 @@ module.exports = function(app) {
         });
     });
 
- 
+    // API to Register
     app.post('/register' , function(req , res){
         
 //        console.log("Register Params::\t"+JSON.stringify(req.body));
@@ -70,6 +106,7 @@ module.exports = function(app) {
         });
     });
     
+    // API to start a new session
     app.post('/start_session' , function(req,res){
         
 //        console.log(JSON.stringify(req.body));
@@ -108,6 +145,7 @@ module.exports = function(app) {
         });
     });    
     
+    //API to collect data for audio game
     app.post('/comprehensive/gaming/audio' , function(req , res){
         
 //        console.log("/comprehensive/gaming/audio::\t"+JSON.stringify(req.body));
@@ -151,6 +189,7 @@ module.exports = function(app) {
         });
     });
     
+    //API to collect data for visual game
     app.post('/comprehensive/gaming/visual' , function(req , res){
         
 //        console.log("/comprehensive/gaming/visual::\t"+JSON.stringify(req.body));
@@ -194,6 +233,7 @@ module.exports = function(app) {
         });
     });
     
+    //API to collect data for audio & visual game
     app.post('/comprehensive/gaming/with' , function(req , res){
         
         console.log("\n\n\n\n\n\n\t\t\t\t\t\t /comprehensive/gaming/with:\t\t"+JSON.stringify(req.body)+"\n\n\n\n\n");
@@ -237,6 +277,7 @@ module.exports = function(app) {
         });
     });
     
+    //API to collect data for audio & visual-distraction game
     app.post('/comprehensive/gaming/without' , function(req , res){
         
         console.log("/comprehensive/gaming/without::\t"+JSON.stringify(req.body));
@@ -294,7 +335,7 @@ module.exports = function(app) {
         });
     });*/
  
- 
+    //API to initialize reset password request
     app.post('/api/resetpass' ,  function(req ,  res) {
  
         var email = req.body.email;
@@ -305,7 +346,7 @@ module.exports = function(app) {
         });
     });
  
- 
+    //API to confirm the change of password
     app.post('/api/resetpass/chg' ,  function(req ,  res) {
  
         var email = req.body.email;

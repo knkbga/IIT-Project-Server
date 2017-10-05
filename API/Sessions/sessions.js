@@ -1,6 +1,6 @@
-var users = require('../config/models');
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
+var user = require('../../Models/userModel');
 
 exports.session = function (w_wo , _id , entry , callback)
 {    

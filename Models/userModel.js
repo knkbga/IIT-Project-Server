@@ -106,31 +106,38 @@ var comprehensive_events_schema = new mongoose.Schema(
 );
 
 var userSchema = mongoose.Schema({
-        "person_credentials" :
+    "person_credentials" :
+    {
+        "dob":String,
+        "jeeRollNumber":String,
+        "jeeTotalScore":String,
+        "jeePhysicsScore":String,
+        "jeeMathsScore":String,
+        "jeeChemistryScore":String,
+        "status" : String,
+        "institute" : String,
+        "gender" : String,
+        "grade_10" : Number,
+        "temp_str" : String,
+        "salt"  : String,
+        "name"  : String,
+        "email" : String,
+        "phone" : Number,
+        "hashed_password" : String,
+    },
+    "versions_used":[
         {
-            "dob":String,
-            "jeeRollNumber":String,
-            "jeeTotalScore":String,
-            "jeePhysicsScore":String,
-            "jeeMathsScore":String,
-            "jeeChemistryScore":String,
-            "status" : String,
-            "institute" : String,
-            "gender" : String,
-            "grade_10" : Number,
-            "temp_str" : String,
-            "salt"  : String,
-            "name"  : String,
-            "email" : String,
-            "phone" : Number,
-            "hashed_password" : String,
-        },
-        "comprehensive_events":
-        [
-            comprehensive_events_schema   
-        ]
+            "version" : String,
+            "date_of_issue" : String,
+            "new_features" : [String],
+            "beta" : Boolean,
+            "release_number" : Number
+        }
+    ],
+    "comprehensive_events":
+    [
+        comprehensive_events_schema   
+    ]
 });
 
-//mongoose.connect('mongodb://iit:1Direction@ds129003.mlab.com:29003/iit_delhi');
-mongoose.connect('mongodb://localhost/test');
-module.exports = mongoose.model('users', userSchema);
+module.exports = mongoose.model('users', userSchema , "users_data");
