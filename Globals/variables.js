@@ -1,6 +1,6 @@
 //Change to corresponding environment
 var Global = {
-    env : "DEV"
+    env : "LOCAL"
 };
 
 switch(Global.env)
@@ -15,7 +15,7 @@ switch(Global.env)
         Global.connect_url = "mongodb://iit:1Direction@ds129003.mlab.com:29003/iit_delhi";
     }
     break;
-    case "DEV":
+    case "LOCAL":
     {
         Global.connect_url = "mongodb://localhost/test";
     }

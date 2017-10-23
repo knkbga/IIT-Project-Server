@@ -2,15 +2,15 @@ var mongoose = require('mongoose');
  
 var json_entry = 
     {
-        "_id":String,
         "time_of_start" : String,
         "string_question" : String,
-        "level ": Number,
+        "level": Number,
         "time_of_submission" : String,
         "string_answer" : String,
         "lives_till_used" : Number,
         "total_volume":String,
-        "success" : String
+        "success" : String,
+        "individual_event_score":Number
     };
 
 var WO_Distraction_schema = new mongoose.Schema(
@@ -23,14 +23,14 @@ var W_Distraction_schema = new mongoose.Schema(
 
 var Visual_schema = new mongoose.Schema(
     {
-        "_id":String,
         "time_of_start" : String,
         "string_question" : String,
-        "level ": Number,
+        "level": Number,
         "time_of_submission" : String,
         "string_answer" : String,
         "lives_till_used" : Number,
-        "success" : String
+        "success" : String,
+        "individual_event_score":Number
     }
 );
 
@@ -47,6 +47,13 @@ var comprehensive_events_schema = new mongoose.Schema(
         "end_session" : String,
         "set_1":
         {
+            "scores":
+            {
+                "WO_Distraction":Number,
+                "W_Distraction":Number,
+                "Visual":Number,
+                "Audio":Number
+            },
             "WO_Distraction" :
             [
                 WO_Distraction_schema
@@ -66,6 +73,13 @@ var comprehensive_events_schema = new mongoose.Schema(
         },
         "set_2":
         {
+            "scores":
+            {
+                "WO_Distraction":Number,
+                "W_Distraction":Number,
+                "Visual":Number,
+                "Audio":Number
+            },
             "WO_Distraction" :
             [
                 WO_Distraction_schema
@@ -85,6 +99,13 @@ var comprehensive_events_schema = new mongoose.Schema(
         },
         "set_3":
         {
+            "scores":
+            {
+                "WO_Distraction":Number,
+                "W_Distraction":Number,
+                "Visual":Number,
+                "Audio":Number
+            },
             "WO_Distraction" :
             [
                 WO_Distraction_schema
@@ -124,6 +145,14 @@ var userSchema = mongoose.Schema({
         "email" : String,
         "phone" : Number,
         "hashed_password" : String,
+    },
+    "current_version":
+    {
+            "version" : String,
+            "date_of_issue" : String,
+            "new_features" : [String],
+            "beta" : Boolean,
+            "release_number" : Number        
     },
     "versions_used":[
         {

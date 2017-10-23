@@ -63,10 +63,10 @@ module.exports = function(app) {
     });
     
     //API to update APK
-    app.post('/api/update' , function(req,res) {
+    /*app.post('/api/update' , function(req,res) {
         var curr_version = req.body.version;
         versions.
-    });
+    });*/
     
     // API to login
     app.post('/login' , function(req , res){
@@ -163,6 +163,7 @@ module.exports = function(app) {
         for (var i=0;i<req.body.different_events.length;i++)
         {
             json_entry.push({
+                individual_event_score: req.body.different_events[i].individual_event_score,
                 time_of_start: req.body.different_events[i].time_of_start,
                 string_question: req.body.different_events[i].string_question,
                 level: parseInt(req.body.different_events[i].level),
@@ -179,6 +180,7 @@ module.exports = function(app) {
             session_token : req.body.session_token,
             start_session : req.body.start_session,
             end_session : req.body.end_session,
+            game_score : req.body.game_score,
             json_entry: json_entry
         };
         if(req.body.different_events[0].time_of_start != null)
@@ -207,6 +209,7 @@ module.exports = function(app) {
         for (var i=0;i<req.body.different_events.length;i++)
         {
             json_entry.push({
+                individual_event_score: req.body.different_events[i].individual_event_score,
                 time_of_start: req.body.different_events[i].time_of_start,
                 string_question: req.body.different_events[i].string_question,
                 level: parseInt(req.body.different_events[i].level),
@@ -223,6 +226,7 @@ module.exports = function(app) {
             session_token : req.body.session_token,
             start_session : req.body.start_session,
             end_session : req.body.end_session,
+            game_score : req.body.game_score,
             json_entry: json_entry
         };
         if(req.body.different_events[0].time_of_start != null)
@@ -251,6 +255,7 @@ module.exports = function(app) {
         for (var i=0;i<req.body.different_events.length;i++)
         {
             json_entry.push({
+                individual_event_score: req.body.different_events[i].individual_event_score,
                 time_of_start: req.body.different_events[i].time_of_start,
                 string_question: req.body.different_events[i].string_question,
                 level: parseInt(req.body.different_events[i].level),
@@ -267,6 +272,7 @@ module.exports = function(app) {
             session_token : req.body.session_token,
             start_session : req.body.start_session,
             end_session : req.body.end_session,
+            game_score : req.body.game_score,
             json_entry: json_entry
         };
         if(req.body.different_events[0].time_of_start != null)
@@ -295,6 +301,7 @@ module.exports = function(app) {
         for (var i=0;i<req.body.different_events.length;i++)
         {
             json_entry.push({
+                individual_event_score: req.body.different_events[i].individual_event_score,
                 time_of_start: req.body.different_events[i].time_of_start,
                 string_question: req.body.different_events[i].string_question,
                 level: parseInt(req.body.different_events[i].level),
@@ -313,6 +320,7 @@ module.exports = function(app) {
             session_token : req.body.session_token,
             start_session : req.body.start_session,
             end_session : req.body.end_session,
+            game_score : req.body.game_score,
             json_entry: json_entry
         };
         if(req.body.different_events[0].time_of_start != null)

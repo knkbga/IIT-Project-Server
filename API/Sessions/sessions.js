@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
-var user = require('../../Models/userModel');
+var users = require('../../Models/userModel');
 
 exports.session = function (w_wo , _id , entry , callback)
 {    
@@ -18,63 +18,24 @@ exports.session = function (w_wo , _id , entry , callback)
                 
                 instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
-                switch(entry.set)
+                var set = "set_"+entry.set;
+                for(var i=0;i<entry.json_entry.length;i++)
                 {
-                    case 1:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_1.WO_Distraction.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log("Error found");
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log("Success");
-                            }
-                        });
-                    }
-                    break;
-                    case 2:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_2.WO_Distraction.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
-                    case 3:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_3.WO_Distraction.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
+                    instance.comprehensive_events.id(entry.session_token)[set].WO_Distraction.push(entry.json_entry[i])
                 }
+                instance.comprehensive_events.id(entry.session_token)[set].scores.set({"WO_Distraction":entry.game_score})
+                instance.save(function(err,model){
+                    if(err)
+                    {
+                        callback({res:false,response:"Error in updation"});
+                        console.log("Error found");
+                    }
+                    else
+                    {
+                        callback({res:true,w_id:model._id});
+                        console.log("Success");
+                    }
+                });
             }
         );
     }
@@ -89,63 +50,24 @@ exports.session = function (w_wo , _id , entry , callback)
                 
                 instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
-                switch(entry.set)
+                var set = "set_"+entry.set;
+                for(var i=0;i<entry.json_entry.length;i++)
                 {
-                    case 1:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_1.Audio.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
-                    case 2:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_2.Audio.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
-                    case 3:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_3.Audio.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
+                    instance.comprehensive_events.id(entry.session_token)[set].Audio.push(entry.json_entry[i])
                 }
+                instance.comprehensive_events.id(entry.session_token)[set].scores.set({"Audio":entry.game_score})
+                instance.save(function(err,model){
+                    if(err)
+                    {
+                        callback({res:false,response:"Error in updation"});
+                        console.log(callback);
+                    }
+                    else
+                    {
+                        callback({res:true,w_id:model._id});
+                        console.log(callback);
+                    }
+                });
             }
         );
     }
@@ -160,63 +82,24 @@ exports.session = function (w_wo , _id , entry , callback)
                 
                 instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
-                switch(entry.set)
+                var set = "set_"+entry.set;
+                for(var i=0;i<entry.json_entry.length;i++)
                 {
-                    case 1:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_1.Visual.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
-                    case 2:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_2.Visual.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
-                    case 3:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_3.Visual.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
+                    instance.comprehensive_events.id(entry.session_token)[set].Visual.push(entry.json_entry[i])
                 }
+                instance.comprehensive_events.id(entry.session_token)[set].scores.set({"Visual":entry.game_score})
+                instance.save(function(err,model){
+                    if(err)
+                    {
+                        callback({res:false,response:"Error in updation"});
+                        console.log(callback);
+                    }
+                    else
+                    {
+                        callback({res:true,w_id:model._id});
+                        console.log(callback);
+                    }
+                });
             }
         );
     }
@@ -231,63 +114,24 @@ exports.session = function (w_wo , _id , entry , callback)
                 
                 instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
-                switch(entry.set)
+                var set = "set_"+entry.set;
+                for(var i=0;i<entry.json_entry.length;i++)
                 {
-                    case 1:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_1.W_Distraction.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
-                    case 2:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_2.W_Distraction.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
-                    case 3:
-                    {
-                        for(var i=0;i<entry.json_entry.length;i++)
-                        instance.comprehensive_events.id(entry.session_token).set_3.W_Distraction.push(entry.json_entry[i])
-                        instance.save(function(err,model){
-                            if(err)
-                            {
-                                callback({res:false,response:"Error in updation"});
-                                console.log(callback);
-                            }
-                            else
-                            {
-                                callback({res:true,w_id:model._id});
-                                console.log(callback);
-                            }
-                        });
-                    }
-                    break;
+                    instance.comprehensive_events.id(entry.session_token)[set].W_Distraction.push(entry.json_entry[i])
                 }
+                instance.comprehensive_events.id(entry.session_token)[set].scores.set({"W_Distraction":entry.game_score})
+                instance.save(function(err,model){
+                    if(err)
+                    {
+                        callback({res:false,response:"Error in updation"});
+                        console.log(callback);
+                    }
+                    else
+                    {
+                        callback({res:true,w_id:model._id});
+                        console.log(callback);
+                    }
+                });
             }
         );
     }
