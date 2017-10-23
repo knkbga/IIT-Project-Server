@@ -5,7 +5,7 @@ var nodemailer = require('nodemailer');
 var nodemailer_smtp = require('nodemailer-smtp-transport');
 var user = require('../../Models/userModel');
  
-var smtpTransport = nodemailer.createTransport("SMTP",{
+var smtpTransport = nodemailer_smtp.createTransport("SMTP",{
     port: 587,
     secure: false,
     auth: {
