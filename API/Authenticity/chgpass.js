@@ -2,10 +2,9 @@ var crypto = require('crypto');
 var rand = require('csprng');
 var mongoose = require('mongoose');
 var nodemailer = require('nodemailer');
-var nodemailer_smtp = require('nodemailer-smtp-transport');
 var user = require('../../Models/userModel');
  
-var smtpTransport = nodemailer_smtp.createTransport("SMTP",{
+var smtpTransport = nodemailer.createTransport("SMTP",{
     port: 587,
     secure: false,
     auth: {
