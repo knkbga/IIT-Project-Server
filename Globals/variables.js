@@ -1,6 +1,6 @@
 //Change to corresponding environment
 var Global = {
-    env : "LOCAL"
+    env : "PROD_IIT"
 };
 
 switch(Global.env)
