@@ -1,3 +1,4 @@
+var ObjectId = require('mongodb').ObjectID;
 var mongoose = require('mongoose');
  
 var json_entry = 
@@ -148,19 +149,11 @@ var userSchema = mongoose.Schema({
     },
     "current_version":
     {
-            "version" : String,
-            "date_of_issue" : String,
-            "new_features" : [String],
-            "beta" : Boolean,
-            "release_number" : Number        
+        version_id : ObjectId      
     },
     "versions_used":[
         {
-            "version" : String,
-            "date_of_issue" : String,
-            "new_features" : [String],
-            "beta" : Boolean,
-            "release_number" : Number
+            version_id : ObjectId
         }
     ],
     "comprehensive_events":
