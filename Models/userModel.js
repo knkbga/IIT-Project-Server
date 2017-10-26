@@ -149,11 +149,19 @@ var userSchema = mongoose.Schema({
     },
     "current_version":
     {
-        version_id : ObjectId      
+        "version" : String,
+        "date-of-issue" : String,
+        "new-features" : [String],
+        "beta" : Boolean,
+        "release-number" : Number
     },
     "versions_used":[
         {
-            version_id : ObjectId
+            "version" : String,
+            "date-of-issue" : String,
+            "new-features" : [String],
+            "beta" : Boolean,
+            "release-number" : Number
         }
     ],
     "comprehensive_events":
