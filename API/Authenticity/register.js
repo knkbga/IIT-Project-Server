@@ -2,11 +2,12 @@ var crypto = require('crypto');
 var rand = require('csprng');
 var mongoose = require('mongoose');
 var user = require('../../Models/userModel');
+var Globals = require('../../Globals/variables');
  
 exports.register = function(entry,callback)
 {
-    console.log(JSON.stringify(entry));
-    
+    if(Globals.debug)
+        console.log("\nIn register.js");
     var email = entry.email;
     var app_code = entry.app_code;
     var password = entry.password;
@@ -53,27 +54,37 @@ exports.register = function(entry,callback)
                     if(len == 0)
                     {
                         newuser.save(function (err){
+                            if(Globals.debug)
+                                console.log("\nSucessfully Registered");
                             callback({'response':"Sucessfully Registered",success:true});
                         });
                     }
                     else
                     {
+                        if(Globals.debug)
+                            console.log("\nEmail already Registered");
                         callback({'response':"Email already Registered",success:false});
                     }
                 });
             }
             else 
             {
+                if(Globals.debug)
+                    console.log("\nPassword Weak");
                 callback({'response':"Password Weak",success:false});
             }
         }
         else
         {
+            if(Globals.debug)
+                console.log("\nEmail Not Valid");
             callback({'response':"Email Not Valid",success:false});
         }
     }
     else
     {
+        if(Globals.debug)
+            console.log("\nYour app is outdated");
         callback({'response':"Your app is outdated",success:false});   
     }
 }

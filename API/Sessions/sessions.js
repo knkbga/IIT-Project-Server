@@ -1,10 +1,12 @@
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
 var users = require('../../Models/userModel');
+var Globals = require('../../Globals/variables');
 
 exports.session = function (w_wo , _id , entry , callback)
 {    
-    console.log("\n\n\n\n\n\t\t\t\t\t"+"entry :\t"+JSON.stringify(entry)+"\n\n\n\n\n");
+    if (Globals.debug)
+        console.log("\n\n\n\n\n\n\t\t\t\t\t"+"entry :\t"+JSON.stringify(entry)+"\n\n\n\n\n");
     
     if(w_wo==3) //Without Distraction
     {
@@ -28,12 +30,14 @@ exports.session = function (w_wo , _id , entry , callback)
                     if(err)
                     {
                         callback({res:false,response:"Error in updation"});
-                        console.log("Error found");
+                        if (Globals.debug)
+                            console.log("\nError found");
                     }
                     else
                     {
                         callback({res:true,w_id:model._id});
-                        console.log("Success");
+                        if (Globals.debug)
+                            console.log("\nSuccess");
                     }
                 });
             }
@@ -60,12 +64,14 @@ exports.session = function (w_wo , _id , entry , callback)
                     if(err)
                     {
                         callback({res:false,response:"Error in updation"});
-                        console.log(callback);
+                        if (Globals.debug)
+                            console.log(callback);
                     }
                     else
                     {
                         callback({res:true,w_id:model._id});
-                        console.log(callback);
+                        if (Globals.debug)
+                            console.log(callback);
                     }
                 });
             }
@@ -92,12 +98,14 @@ exports.session = function (w_wo , _id , entry , callback)
                     if(err)
                     {
                         callback({res:false,response:"Error in updation"});
-                        console.log(callback);
+                        if (Globals.debug)
+                            console.log(callback);
                     }
                     else
                     {
                         callback({res:true,w_id:model._id});
-                        console.log(callback);
+                        if (Globals.debug)
+                            console.log(callback);
                     }
                 });
             }
@@ -124,12 +132,14 @@ exports.session = function (w_wo , _id , entry , callback)
                     if(err)
                     {
                         callback({res:false,response:"Error in updation"});
-                        console.log(callback);
+                        if (Globals.debug)
+                            console.log(callback);
                     }
                     else
                     {
                         callback({res:true,w_id:model._id});
-                        console.log(callback);
+                        if (Globals.debug)
+                            console.log(callback);
                     }
                 });
             }

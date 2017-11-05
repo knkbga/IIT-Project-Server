@@ -2,15 +2,18 @@ var crypto = require('crypto');
 var rand = require('csprng');
 var mongoose = require('mongoose');
 var user = require('../../Models/userModel');
+var Globals = require('../../Globals/variables');
 
 exports.login = function(email,password,app_code,callback) {
 
-    console.log("In login.js");
+    if (Globals.debug)
+        console.log("\nIn login.js");
     if(app_code == "iit")
     {
         user.find({'person_credentials.email': email},function(err,users)
         {
-            console.log("Email id found.");
+            if (Globals.debug)
+                console.log("\nEmail id found.");
             if(users.length != 0)
             {
                 var unique_id = users[0].person_credentials.token;
@@ -23,21 +26,29 @@ exports.login = function(email,password,app_code,callback) {
 
                 if(hash_db == hashed_password)
                 {
+                    if (Global.debug)
+                        console.log('Login Success');
                     callback({'response':"Login Sucess",'token':unique_id,'success':true,'_id':id});
                 }
                 else
                 {
+                    if (Global.debug)
+                        console.log('Invalid Password');
                     callback({'response':"Invalid Password",'success':false});
                 }
             }
             else 
             {
-                callback({'response':"Email id not valid.",'success':false});
+                if (Global.debug)
+                    console.log('Email id not valid');
+                callback({'response':"Email id not valid",'success':false});
             }
         });
     }
     else 
     {
-        callback({'response':"You are not allowed to login yet...",'success':false});
+        if (Global.debug)
+            console.log('You are not allowed to login yet');
+        callback({'response':"You are not allowed to login yet",'success':false});
     }
 }
