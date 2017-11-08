@@ -26,20 +26,20 @@ exports.login = function(email,password,app_code,callback) {
 
                 if(hash_db == hashed_password)
                 {
-                    if (Global.debug)
+                    if (Globals.debug)
                         console.log('Login Success');
                     callback({'response':"Login Sucess",'token':unique_id,'success':true,'_id':id});
                 }
                 else
                 {
-                    if (Global.debug)
+                    if (Globals.debug)
                         console.log('Invalid Password');
                     callback({'response':"Invalid Password",'success':false});
                 }
             }
             else 
             {
-                if (Global.debug)
+                if (Globals.debug)
                     console.log('Email id not valid');
                 callback({'response':"Email id not valid",'success':false});
             }
@@ -47,7 +47,7 @@ exports.login = function(email,password,app_code,callback) {
     }
     else 
     {
-        if (Global.debug)
+        if (Globals.debug)
             console.log('You are not allowed to login yet');
         callback({'response':"You are not allowed to login yet",'success':false});
     }
