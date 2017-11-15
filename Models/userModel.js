@@ -50,10 +50,10 @@ var comprehensive_events_schema = new mongoose.Schema(
         {
             "scores":
             {
-                "WO_Distraction":Number,
-                "W_Distraction":Number,
-                "Visual":Number,
-                "Audio":Number
+                "WO_Distraction":{type: Number, default: 0},
+                "W_Distraction":{type: Number, default: 0},
+                "Visual":{type: Number, default: 0},
+                "Audio":{type: Number, default: 0}
             },
             "WO_Distraction" :
             [
@@ -76,10 +76,10 @@ var comprehensive_events_schema = new mongoose.Schema(
         {
             "scores":
             {
-                "WO_Distraction":Number,
-                "W_Distraction":Number,
-                "Visual":Number,
-                "Audio":Number
+                "WO_Distraction":{type: Number, default: 0},
+                "W_Distraction":{type: Number, default: 0},
+                "Visual":{type: Number, default: 0},
+                "Audio":{type: Number, default: 0}
             },
             "WO_Distraction" :
             [
@@ -102,10 +102,10 @@ var comprehensive_events_schema = new mongoose.Schema(
         {
             "scores":
             {
-                "WO_Distraction":Number,
-                "W_Distraction":Number,
-                "Visual":Number,
-                "Audio":Number
+                "WO_Distraction":{type: Number, default: 0},
+                "W_Distraction":{type: Number, default: 0},
+                "Visual":{type: Number, default: 0},
+                "Audio":{type: Number, default: 0}
             },
             "WO_Distraction" :
             [

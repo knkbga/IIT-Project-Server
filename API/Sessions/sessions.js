@@ -6,8 +6,12 @@ var Globals = require('../../Globals/variables');
 exports.session = function (w_wo , _id , entry , callback)
 {    
     if (Globals.debug)
-        console.log("\n\n\n\n\n\n\t\t\t\t\t"+"entry :\t"+JSON.stringify(entry)+"\n\n\n\n\n");
+    {
+        console.log("\n"+"entry :\t"+JSON.stringify(entry));
+        console.log("\ngame_score:\t\t"+entry.game_score);
+    }
     
+    var set = "set_"+entry.set;
     if(w_wo==3) //Without Distraction
     {
         
@@ -19,13 +23,11 @@ exports.session = function (w_wo , _id , entry , callback)
             function(err,instance){
                 
                 instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
-                
-                var set = "set_"+entry.set;
+                instance.comprehensive_events.id(entry.session_token)[set].scores.WO_Distraction=entry.game_score;
                 for(var i=0;i<entry.json_entry.length;i++)
                 {
-                    instance.comprehensive_events.id(entry.session_token)[set].WO_Distraction.push(entry.json_entry[i])
+                    instance.comprehensive_events.id(entry.session_token)[set].WO_Distraction.push(entry.json_entry[i]);
                 }
-                instance.comprehensive_events.id(entry.session_token)[set].scores.set({"WO_Distraction":entry.game_score})
                 instance.save(function(err,model){
                     if(err)
                     {
@@ -54,12 +56,11 @@ exports.session = function (w_wo , _id , entry , callback)
                 
                 instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
-                var set = "set_"+entry.set;
+                instance.comprehensive_events.id(entry.session_token)[set].scores.Audio=entry.game_score;
                 for(var i=0;i<entry.json_entry.length;i++)
                 {
-                    instance.comprehensive_events.id(entry.session_token)[set].Audio.push(entry.json_entry[i])
+                    instance.comprehensive_events.id(entry.session_token)[set].Audio.push(entry.json_entry[i]);
                 }
-                instance.comprehensive_events.id(entry.session_token)[set].scores.set({"Audio":entry.game_score})
                 instance.save(function(err,model){
                     if(err)
                     {
@@ -88,12 +89,11 @@ exports.session = function (w_wo , _id , entry , callback)
                 
                 instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
-                var set = "set_"+entry.set;
+                instance.comprehensive_events.id(entry.session_token)[set].scores.Visual=entry.game_score;
                 for(var i=0;i<entry.json_entry.length;i++)
                 {
-                    instance.comprehensive_events.id(entry.session_token)[set].Visual.push(entry.json_entry[i])
+                    instance.comprehensive_events.id(entry.session_token)[set].Visual.push(entry.json_entry[i]);
                 }
-                instance.comprehensive_events.id(entry.session_token)[set].scores.set({"Visual":entry.game_score})
                 instance.save(function(err,model){
                     if(err)
                     {
@@ -122,12 +122,11 @@ exports.session = function (w_wo , _id , entry , callback)
                 
                 instance.comprehensive_events.id(entry.session_token).set({ "end_session" :entry.json_entry[entry.json_entry.length-1].time_of_submission});
                 
-                var set = "set_"+entry.set;
+                instance.comprehensive_events.id(entry.session_token)[set].scores.W_Distraction=entry.game_score;
                 for(var i=0;i<entry.json_entry.length;i++)
                 {
-                    instance.comprehensive_events.id(entry.session_token)[set].W_Distraction.push(entry.json_entry[i])
+                    instance.comprehensive_events.id(entry.session_token)[set].W_Distraction.push(entry.json_entry[i]);
                 }
-                instance.comprehensive_events.id(entry.session_token)[set].scores.set({"W_Distraction":entry.game_score})
                 instance.save(function(err,model){
                     if(err)
                     {

@@ -27,6 +27,13 @@ var userSchema = mongoose.Schema({
                 "end_session" : String,
                 "set_1":
                 {
+                    "scores":
+                    {
+                        "WO_Distraction":{type: Number, default: 0},
+                        "W_Distraction":{type: Number, default: 0},
+                        "Visual":{type: Number, default: 0},
+                        "Audio":{type: Number, default: 0}
+                    },
                     "WO_Distraction" :
                     [
                         {
@@ -85,6 +92,13 @@ var userSchema = mongoose.Schema({
                 },
                 "set_2":
                 {
+                    "scores":
+                    {
+                        "WO_Distraction":{type: Number, default: 0},
+                        "W_Distraction":{type: Number, default: 0},
+                        "Visual":{type: Number, default: 0},
+                        "Audio":{type: Number, default: 0}
+                    },
                     "WO_Distraction" :
                     [
                         {
@@ -143,6 +157,13 @@ var userSchema = mongoose.Schema({
                 },
                 "set_3":
                 {
+                    "scores":
+                    {
+                        "WO_Distraction":{type: Number, default: 0},
+                        "W_Distraction":{type: Number, default: 0},
+                        "Visual":{type: Number, default: 0},
+                        "Audio":{type: Number, default: 0}
+                    },
                     "WO_Distraction" :
                     [
                         {
