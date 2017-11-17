@@ -35,6 +35,13 @@ var login       = require('../API/Authenticity/login');
 var sessions    = require('../API/Sessions/sessions');
 
 /*
+---------------------------------------------- 
+    Generic Variables
+----------------------------------------------
+*/
+var ObjectId = require('mongodb').ObjectID;
+
+/*
 Route functions
 */
 module.exports = function(app) {
@@ -59,6 +66,39 @@ module.exports = function(app) {
 
         var filestream = fs.createReadStream(file);
         filestream.pipe(res);
+        
+    });
+    
+    // API to confirm a logged in user
+    app.get('/confirm_user' , function(req,res){
+        
+        var req_id;
+        console.log("\n\n\n"+req.query.id);
+        if (typeof(req.query.id) != 'undefined')
+        {
+            req_id = req.query.id;
+            users.findById( ObjectId(req_id) ,function(err,instance){
+                if(!err)
+                {
+                    if((instance.person_credentials.status).trim().toLowerCase() == 'active')
+                    {
+                        res.json({"res":true , response:"User is valid"});
+                    }
+                    else
+                    {
+                        res.json({"res":false , response:"User not active anymore"});
+                    }
+                }
+                else
+                {
+                    res.json({"res":false , response:"Couldn't find the registered user"});
+                }
+            });
+        }
+        else
+        {
+            res.json({"res":false , response:"Id was not found"});
+        }
         
     });
     
