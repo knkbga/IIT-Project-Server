@@ -1,2 +1,2 @@
-node_modules/
-/Globals/variables.js
+node_modules/*
+Globals/variables.js

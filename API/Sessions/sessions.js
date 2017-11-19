@@ -145,3 +145,26 @@ exports.session = function (w_wo , _id , entry , callback)
         );
     }
 }
+exports.new_session = function (_id,entry,session_token,callback){
+    console.log("\nIN Utils.function :: \t new_session");
+    users.findByIdAndUpdate(_id, 
+            {$push: {"comprehensive_events": entry}},
+            {safe: true, upsert: true,new:true},
+        function (err, model) {
+            if (err) {
+                callback({
+                    success: false,
+                    response: "Some error occured."
+                });
+                if (Globals.debug)
+                    console.log("\nSome error ocurred");
+            } else {
+                callback({
+                    success: true,
+                    session_token: session_token
+                });
+                if (Globals.debug)
+                    console.log("\nSuccesfully updated");
+            }
+    });
+}
