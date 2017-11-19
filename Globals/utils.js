@@ -173,8 +173,6 @@ function resetpass_chg_json_parse(api_request_params) {
     var code = api_request_params.code;
     var newpass = api_request_params.newpass;
     
-    return returned;
-    
     var returned = {
         email: email,
         code: code,

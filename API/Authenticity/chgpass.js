@@ -45,7 +45,7 @@ exports.respass_init = function(email,callback) {
                     {
                         if (Globals.debug)
                             console.log("\nError while sending email");
-                        callback({'response':"Error While Resetting password. Try Again !",'success':false});
+                        callback({'response':"Cuurently service is down. Try Again later !",'success':false});
                     }
                     else
                     {
