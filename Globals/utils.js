@@ -3,7 +3,7 @@
     Glboals
 ---------------------------------------------- 
 */
-var Globals      = require("../Globals/variables");
+var Globals = require("../Globals/variables");
 
 /*
 ---------------------------------------------- 
@@ -17,7 +17,8 @@ const json_parse = {
     new_session: new_session_json_parse,
     login: login_json_parse,
     session: session_json_parse,
-    email: email_json_parse
+    resetpass: resetpass_json_parse,
+    resetpass_chg: resetpass_chg_json_parse
 };
 
 /*
@@ -27,7 +28,7 @@ const json_parse = {
 */
 function register_json_parse(api_request_params) {
     if (Globals.debug)
-        console.log("\nIN Utils.function :: \t"+arguments.callee.name);
+        console.log("\nIN Utils.function :: \t" + arguments.callee.name);
     var entry = {
         email: convert_to_empty_if_null_or_undefined(api_request_params.email),
         password: convert_to_empty_if_null_or_undefined(api_request_params.password),
@@ -48,16 +49,16 @@ function register_json_parse(api_request_params) {
     var returned = {
         entry: entry
     };
-    
+
     if (Globals.debug)
-        console.log("\n Parsed Object : \t"+JSON.stringify(returned));
-    
+        console.log("\n Parsed Object : \t" + JSON.stringify(returned));
+
     return returned;
 }
 
 function new_session_json_parse(api_request_params) {
     if (Globals.debug)
-        console.log("\nIN Utils.function :: \t"+arguments.callee.name);
+        console.log("\nIN Utils.function :: \t" + arguments.callee.name);
     var _id = api_request_params._id;
     var session_id = api_request_params._id + "comp";
     var start_session = api_request_params.start_session;
@@ -72,22 +73,22 @@ function new_session_json_parse(api_request_params) {
     };
 
     console.log("return done")
-    
+
     var returned = {
         _id: _id,
         entry: entry,
         session_token: session_token
     };
-    
+
     if (Globals.debug)
-        console.log("\n Parsed Object : \t"+JSON.stringify(returned));
-    
+        console.log("\n Parsed Object : \t" + JSON.stringify(returned));
+
     return returned;
 }
 
 function login_json_parse(api_request_params) {
     if (Globals.debug)
-        console.log("\nIN Utils.function :: \t"+arguments.callee.name);
+        console.log("\nIN Utils.function :: \t" + arguments.callee.name);
     var email = api_request_params.email;
     var password = api_request_params.password;
     var app_code = api_request_params.app_code;
@@ -97,16 +98,16 @@ function login_json_parse(api_request_params) {
         password: password,
         app_code: app_code
     }
-    
+
     if (Globals.debug)
-        console.log("\n Parsed Object : \t"+JSON.stringify(returned));
-    
+        console.log("\n Parsed Object : \t" + JSON.stringify(returned));
+
     return returned;
 }
 
 function session_json_parse(api_request_params) {
     if (Globals.debug)
-        console.log("\nIN Utils.function :: \t"+arguments.callee.name);
+        console.log("\nIN Utils.function :: \t" + arguments.callee.name);
     var different_events = new Array();
     var _id = api_request_params._id;
     var set = api_request_params.set;
@@ -114,7 +115,7 @@ function session_json_parse(api_request_params) {
     var start_session = api_request_params.start_session;
     var end_session = api_request_params.end_session;
     var json_entry = [];
-    
+
     for (var i = 0; i < api_request_params.different_events.length; i++) {
         json_entry.push({
             individual_event_score: api_request_params.different_events[i].individual_event_score,
@@ -142,23 +143,47 @@ function session_json_parse(api_request_params) {
         entry: entry,
         _id: _id
     };
-    
+
     if (Globals.debug)
-        console.log("\n Parsed Object : \t"+JSON.stringify(returned));
-    
+        console.log("\n Parsed Object : \t" + JSON.stringify(returned));
+
     return returned;
 }
 
-function email_json_parse(api_request_params) {
+function resetpass_json_parse(api_request_params) {
+    if (Globals.debug)
+        console.log("\nIN Utils.function :: \t" + arguments.callee.name);
     var email = api_request_params.email;
+
+    var returned = {
+        email: email
+    }
+
+    if (Globals.debug)
+        console.log("\n Parsed Object : \t" + JSON.stringify(returned));
+
+    return returned;
+}
+
+function resetpass_chg_json_parse(api_request_params) {
+    if (Globals.debug)
+        console.log("\nIN Utils.function :: \t" + arguments.callee.name);
+    
+    var email = api_request_params.email;
+    var code = api_request_params.code;
+    var newpass = api_request_params.newpass;
+    
+    return returned;
     
     var returned = {
-        email : email
+        email: email,
+        code: code,
+        newpass: newpass
     }
-    
+
     if (Globals.debug)
-        console.log("\n Parsed Object : \t"+JSON.stringify(returned));
-    
+        console.log("\n Parsed Object : \t" + JSON.stringify(returned));
+
     return returned;
 }
 
@@ -182,8 +207,7 @@ function check_if_null_or_undefined(variable) {
 function convert_to_empty_if_null_or_undefined(variable) {
     if (check_if_null_or_undefined(variable)) {
         return "";
-    }
-    else {
+    } else {
         return variable;
     }
 }

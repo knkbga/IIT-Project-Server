@@ -208,7 +208,7 @@ module.exports = function(app) {
         if (Globals.debug)
             console.log("\nIn URL :: \t"+req.url);
  
-        var parsed_object = utils.json_parse.email(req.body);
+        var parsed_object = utils.json_parse.resetpass(req.body);
  
         chgpass.respass_init(parsed_object.email , function(found){
                 res.json(found);
@@ -220,11 +220,9 @@ module.exports = function(app) {
         if (Globals.debug)
             console.log("\nIn URL :: \t"+req.url);
  
-        var email = req.body.email;
-        var code = req.body.code;
-        var npass = req.body.newpass;
+        var parsed_object = utils.json_parse.resetpass_chg(req.body);
  
-        chgpass.respass_chg(email , code , npass , function(found){
+        chgpass.respass_chg(parsed_object.email , parsed_object.code , parsed_object.newpass , function(found){
                 res.json(found);
         });
     });
