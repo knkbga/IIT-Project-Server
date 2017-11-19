@@ -8,6 +8,7 @@ var Globals = require('../../Globals/variables');
 var smtpTransport = nodemailer.createTransport("SMTP",{
     port: 587,
     secure: false,
+    host: 'smtp.gmail.com',
     auth: {
         user: "bagga.kanak1@gmail.com",
         pass: "1Direction"
