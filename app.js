@@ -3,11 +3,11 @@
     Node Modules 
 ----------------------------------------------
 */
-var express    = require('express');
-var app        = express();
-var port       = process.env.PORT || 8080;
+var express = require('express');
+var app = express();
+var port = process.env.PORT || 8080;
 var bodyParser = require('body-parser');
-var mongoose   = require("mongoose");
+var mongoose = require("mongoose");
 /*
 ---------------------------------------------- 
     Glboals 
@@ -17,7 +17,9 @@ var Globals = require("./Globals/variables");
 
 // Configuration
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 //DB Connection
 mongoose.connect(Globals.connect_url);

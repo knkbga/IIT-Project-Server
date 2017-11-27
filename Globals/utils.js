@@ -168,11 +168,11 @@ function resetpass_json_parse(api_request_params) {
 function resetpass_chg_json_parse(api_request_params) {
     if (Globals.debug)
         console.log("\nIN Utils.function :: \t" + arguments.callee.name);
-    
+
     var email = api_request_params.email;
     var code = api_request_params.code;
     var newpass = api_request_params.newpass;
-    
+
     var returned = {
         email: email,
         code: code,
