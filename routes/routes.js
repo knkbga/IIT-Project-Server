@@ -33,6 +33,7 @@ var chgpass = require('../API/Authenticity/chgpass');
 var register = require('../API/Authenticity/register');
 var login = require('../API/Authenticity/login');
 var sessions = require('../API/Sessions/sessions');
+var score = require('../API/Scorecard/scores');
 
 /*
 ---------------------------------------------- 
@@ -223,6 +224,12 @@ module.exports = function (app) {
             res.json(found);
         });
     });
-
+    
+    //API to retrieve scorecard
+    app.get('/api/scorecard/',function (req,res) {
+        if (Globals.debug)
+            console.log("\nIn URL :: \t" + req.url);
+        //TODO: Get the score for leaderboard
+    });
 
 };

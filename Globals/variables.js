@@ -1,7 +1,7 @@
 //Change to corresponding environment
 var Global = {
     env: "PROD_IIT",
-    debug: true
+    debug: false
 };
 
 switch (Global.env) {

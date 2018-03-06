@@ -24,6 +24,12 @@ app.use(bodyParser.urlencoded({
 //DB Connection
 mongoose.connect(Globals.connect_url);
 
+//Middlewares
+app.use(function (req, res, next) {
+//  console.log("\nIn middleware\nRequest url :\t"+req.url);
+  next();
+})
+
 // Routes 
 require('./routes/routes.js')(app);
 app.listen(port);

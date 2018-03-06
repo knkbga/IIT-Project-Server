@@ -13,15 +13,15 @@ var json_entry = {
     "individual_event_score": Number
 };
 
-var WO_Distraction_schema = new mongoose.Schema(
+var WO_Distraction_schema = mongoose.Schema(
     json_entry
 );
 
-var W_Distraction_schema = new mongoose.Schema(
+var W_Distraction_schema = mongoose.Schema(
     json_entry
 );
 
-var Visual_schema = new mongoose.Schema({
+var Visual_schema = mongoose.Schema({
     "time_of_start": String,
     "string_question": String,
     "level": Number,
@@ -32,12 +32,12 @@ var Visual_schema = new mongoose.Schema({
     "individual_event_score": Number
 });
 
-var Audio_schema = new mongoose.Schema(
+var Audio_schema = mongoose.Schema(
     json_entry
 );
 
 
-var comprehensive_events_schema = new mongoose.Schema({
+var comprehensive_events_schema = mongoose.Schema({
     "_id": String,
     "session_score": Number,
     "start_session": String,

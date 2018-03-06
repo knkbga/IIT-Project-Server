@@ -1,7 +1,10 @@
 var mongoose = require('mongoose');
 var ObjectId = require('mongodb').ObjectID;
 var users = require('../../Models/userModel');
+var score = require('../../Models/scoresModel');
 var Globals = require('../../Globals/variables');
+var utils = require('../../Globals/utils');
+var scores_api = require('../../API/Scorecard/scores');
 
 exports.session = function (w_wo, _id, entry, callback) {
     if (Globals.debug) {
@@ -22,6 +25,19 @@ exports.session = function (w_wo, _id, entry, callback) {
                     "end_session": entry.json_entry[entry.json_entry.length - 1].time_of_submission
                 });
                 instance.comprehensive_events.id(entry.session_token)[set].scores.WO_Distraction = entry.game_score;
+
+                //enter the score for current user to Scores Model
+                var scores_api_object = {
+                    _id: entry._id,
+                    session_token: entry.session_token,
+                    end_session: entry.end_session,
+                    game_score: entry.game_score
+                }
+                scores_api.push_entry_for_users_scores(scores_api_object, callback);
+                
+                // enter the scores in leaderboard if eligible
+                scores_api.check_for_leaderboard_position(_id,entry, callback);
+
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].WO_Distraction.push(entry.json_entry[i]);
                 }
@@ -56,6 +72,20 @@ exports.session = function (w_wo, _id, entry, callback) {
                 });
 
                 instance.comprehensive_events.id(entry.session_token)[set].scores.Audio = entry.game_score;
+
+                //enter the score for current user to Scores Model
+                var scores_api_object = {
+                    _id: entry._id,
+                    session_token: entry.session_token,
+                    end_session: entry.end_session,
+                    game_score: entry.game_score
+                }
+                scores_api.push_entry_for_users_scores(scores_api_object, callback);
+                
+                // enter the scores in leaderboard if eligible
+                scores_api.check_for_leaderboard_position(_id,entry, callback);
+
+
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].Audio.push(entry.json_entry[i]);
                 }
@@ -90,6 +120,20 @@ exports.session = function (w_wo, _id, entry, callback) {
                 });
 
                 instance.comprehensive_events.id(entry.session_token)[set].scores.Visual = entry.game_score;
+
+                //enter the score for current user to Scores Model
+                var scores_api_object = {
+                    _id: entry._id,
+                    session_token: entry.session_token,
+                    end_session: entry.end_session,
+                    game_score: entry.game_score
+                }
+                scores_api.push_entry_for_users_scores(scores_api_object, callback);
+                
+                // enter the scores in leaderboard if eligible
+                scores_api.check_for_leaderboard_position(_id,entry, callback);
+
+
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].Visual.push(entry.json_entry[i]);
                 }
@@ -124,6 +168,20 @@ exports.session = function (w_wo, _id, entry, callback) {
                 });
 
                 instance.comprehensive_events.id(entry.session_token)[set].scores.W_Distraction = entry.game_score;
+
+                //enter the score for current user to Scores Model
+                var scores_api_object = {
+                    _id: entry._id,
+                    session_token: entry.session_token,
+                    end_session: entry.end_session,
+                    game_score: entry.game_score
+                }
+                scores_api.push_entry_for_users_scores(scores_api_object, callback);
+                
+                // enter the scores in leaderboard if eligible
+                scores_api.check_for_leaderboard_position(_id,entry, callback);
+
+
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].W_Distraction.push(entry.json_entry[i]);
                 }

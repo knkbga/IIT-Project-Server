@@ -2,7 +2,10 @@ var crypto = require('crypto');
 var rand = require('csprng');
 var mongoose = require('mongoose');
 var user = require('../../Models/userModel');
+var score = require('../../Models/scoresModel');
 var Globals = require('../../Globals/variables');
+var utils = require('../../Globals/utils');
+var ObjectId = require('mongodb').ObjectID;
 
 exports.register = function (entry, callback) {
     if (Globals.debug)
@@ -47,9 +50,38 @@ exports.register = function (entry, callback) {
                 }, function (err, users) {
                     var len = users.length;
                     if (len == 0) {
-                        newuser.save(function (err) {
+                        newuser.save(function (err, new_user_instance) {
                             if (Globals.debug)
                                 console.log("\nSucessfully Registered");
+                            
+                            var newscore = new score({
+                                users_scores: [
+                                    {
+                                        user_id: new_user_instance._id,
+                                        scores: [],
+                                    }
+                                ]
+                            });
+                            newscore.save(function (err, model) {
+                                if (err) {
+                                    // TODO: Decide what to do.
+                                    /*callback({
+                                        res: false,
+                                        response: "Error in updation"
+                                    });*/
+                                    if (Globals.debug)
+                                        console.log("\nError found");
+                                } else {
+                                    // TODO: Decide what to do.
+                                    /*callback({
+                                        res: true,
+                                        w_id: model._id
+                                    });*/
+                                    if (Globals.debug)
+                                        console.log("\nSuccess");
+                                }
+                            });
+
                             callback({
                                 'response': "Sucessfully Registered",
                                 success: true
