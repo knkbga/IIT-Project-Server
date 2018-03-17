@@ -5,6 +5,31 @@ var scores = require('../../Models/scoresModel');
 var Globals = require('../../Globals/variables');
 var utils = require('../../Globals/utils');
 
+exports.get_top_scorers = function (callback) {
+    scores.findOne({}, function (err, scorers) {
+        console.log(utils.check_if_null_or_undefined(scorers));
+        if (!utils.check_if_null_or_undefined(scorers)) {
+            if (Globals.debug) {
+                console.log("\nSuccessfully got the list of top scorers:\t" + JSON.stringify(scorers.top_scorers));
+            }
+            callback({
+                'response': "Successfully got the list.",
+                'top_scorers': scorers.top_scorers,
+                'success': true
+            });
+        } else {
+            if (Globals.debug) {
+                console.log("\nSuccessfully got the list of top scorers:\t" + JSON.stringify(scorers.top_scorers));
+            }
+            callback({
+                'response': "Couldn't find the list. Setting the list as empty.",
+                'top_scorers': [],
+                'success': false
+            });
+        }
+    });
+};
+
 exports.check_for_leaderboard_position = function (_id, entry, callback) {
     scores.findOne({}).exec(function (err, scorers) {
         if (utils.check_if_null_or_undefined(scorers.top_scorers)) {
@@ -36,6 +61,7 @@ exports.check_for_leaderboard_position = function (_id, entry, callback) {
             });
         } else {
             var suitable_position = suitable_position_leaderboard(entry, scorers.top_scorers); // returns 1000+ if not suitable
+            console.log("\n\n\nsuitable_position:\t"+suitable_position);
             if (suitable_position <= scorers.top_scorers.length) {
                 scorers.top_scorers[suitable_position] = {};
                 scorers.top_scorers[suitable_position]["user_id"] = _id;
@@ -75,13 +101,13 @@ exports.check_for_leaderboard_position = function (_id, entry, callback) {
 };
 
 exports.push_entry_for_users_scores = function (scores_api_object, callback) {
-    scores.find({}, function (err, instance) {
+    scores.find({_id:scores_api_object._id}, function (err, instance) {
         if (utils.check_if_null_or_undefined(instance)) {} else {
             if (utils.check_if_null_or_undefined(instance.users_scores)) {
                 instance.users_scores = [];
             }
-            instance = instance.users_scores;
             if (utils.check_if_null_or_undefined(instance)) { // not found any user, create a new
+                instance = instance.users_scores;
                 var score = new scores({
                     user_id: {
                         type: scores_api_object._id,
@@ -89,6 +115,7 @@ exports.push_entry_for_users_scores = function (scores_api_object, callback) {
                     },
                     scores: [{
                         session_token: scores_api_object.session_token,
+                        name: scores_api_object.name,
                         end_session: scores_api_object.end_session,
                         score: scores_api_object.game_score
                     }]
@@ -115,9 +142,11 @@ exports.push_entry_for_users_scores = function (scores_api_object, callback) {
             } else { // found an existing user
                 var score = {
                     session_token: scores_api_object.session_token,
+                    name: scores_api_object.name,
                     end_session: scores_api_object.end_session,
                     score: scores_api_object.game_score
                 };
+                console.log("\n\n\ninstance:\t"+instance);
                 instance.users_scores.push(score);
                 instance.save(function (err, new_instance) {
                     if (utils.check_if_null_or_undefined(new_instance)) {
@@ -139,9 +168,16 @@ exports.push_entry_for_users_scores = function (scores_api_object, callback) {
             }
         }
     });
-    scores.find({}, function (err, instance) {
+    console.log("\n\n\n"+JSON.stringify(scores_api_object));
+    scores.findOne({}, function (err, instance) {
         if (!utils.check_if_null_or_undefined(instance)) {
-            instance.users_scores.push(entry);
+            var score = {
+                name: scores_api_object.name,
+                session_token: scores_api_object.session_token,
+                end_session: scores_api_object.end_session,
+                score: scores_api_object.game_score
+            };
+            instance.users_scores.push(score);
             instance.save(function (err, instance) {
                 if (err) {
                     callback({

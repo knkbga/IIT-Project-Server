@@ -28,15 +28,16 @@ exports.session = function (w_wo, _id, entry, callback) {
 
                 //enter the score for current user to Scores Model
                 var scores_api_object = {
-                    _id: entry._id,
+                    _id: _id,
+                    name: entry.name,
                     session_token: entry.session_token,
                     end_session: entry.end_session,
                     game_score: entry.game_score
                 }
                 scores_api.push_entry_for_users_scores(scores_api_object, callback);
-                
+
                 // enter the scores in leaderboard if eligible
-                scores_api.check_for_leaderboard_position(_id,entry, callback);
+                scores_api.check_for_leaderboard_position(_id, entry, callback);
 
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].WO_Distraction.push(entry.json_entry[i]);
@@ -75,15 +76,16 @@ exports.session = function (w_wo, _id, entry, callback) {
 
                 //enter the score for current user to Scores Model
                 var scores_api_object = {
-                    _id: entry._id,
+                    _id: _id,
+                    name: entry.name,
                     session_token: entry.session_token,
                     end_session: entry.end_session,
                     game_score: entry.game_score
                 }
                 scores_api.push_entry_for_users_scores(scores_api_object, callback);
-                
+
                 // enter the scores in leaderboard if eligible
-                scores_api.check_for_leaderboard_position(_id,entry, callback);
+                scores_api.check_for_leaderboard_position(_id, entry, callback);
 
 
                 for (var i = 0; i < entry.json_entry.length; i++) {
@@ -123,15 +125,16 @@ exports.session = function (w_wo, _id, entry, callback) {
 
                 //enter the score for current user to Scores Model
                 var scores_api_object = {
-                    _id: entry._id,
+                    _id: _id,
+                    name: entry.name,
                     session_token: entry.session_token,
                     end_session: entry.end_session,
                     game_score: entry.game_score
                 }
                 scores_api.push_entry_for_users_scores(scores_api_object, callback);
-                
+
                 // enter the scores in leaderboard if eligible
-                scores_api.check_for_leaderboard_position(_id,entry, callback);
+                scores_api.check_for_leaderboard_position(_id, entry, callback);
 
 
                 for (var i = 0; i < entry.json_entry.length; i++) {
@@ -171,15 +174,16 @@ exports.session = function (w_wo, _id, entry, callback) {
 
                 //enter the score for current user to Scores Model
                 var scores_api_object = {
-                    _id: entry._id,
+                    _id: _id,
+                    name: entry.name,
                     session_token: entry.session_token,
                     end_session: entry.end_session,
                     game_score: entry.game_score
                 }
                 scores_api.push_entry_for_users_scores(scores_api_object, callback);
-                
+
                 // enter the scores in leaderboard if eligible
-                scores_api.check_for_leaderboard_position(_id,entry, callback);
+                scores_api.check_for_leaderboard_position(_id, entry, callback);
 
 
                 for (var i = 0; i < entry.json_entry.length; i++) {

@@ -127,7 +127,7 @@ module.exports = function (app) {
             console.log("\nIn URL :: \t" + req.url);
         var parsed_object = utils.json_parse.register(req.body);
 
-        if (utils.check_if_null_or_undefined(parsed_object.entry)) {
+        if (!utils.check_if_null_or_undefined(parsed_object.entry)) {
             register.register(parsed_object.entry, function (found) {
                 res.json(found);
             });
@@ -224,11 +224,15 @@ module.exports = function (app) {
             res.json(found);
         });
     });
-    
+
     //API to retrieve scorecard
-    app.get('/api/scorecard/',function (req,res) {
+    app.post('/api/scorecard/', function (req, res) {
         if (Globals.debug)
             console.log("\nIn URL :: \t" + req.url);
+
+        score.get_top_scorers(function (found) {
+            res.json(found);
+        });
         //TODO: Get the score for leaderboard
     });
 

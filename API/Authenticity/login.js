@@ -27,6 +27,7 @@ exports.login = function (email, password, app_code, callback) {
                     if (Globals.debug)
                         console.log('Login Success');
                     callback({
+                        'name': name,
                         'response': "Login Sucess",
                         'token': unique_id,
                         'success': true,

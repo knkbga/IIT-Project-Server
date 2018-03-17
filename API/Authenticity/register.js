@@ -45,47 +45,80 @@ exports.register = function (entry, callback) {
                     }
                 });
 
+                // To check if the collection exists
+                mongoose.connection.db.listCollections({
+                    name: 'scores_data'
+                }).next(function (err, collinfo) {
+                    if (collinfo) {
+                        // Found
+                        if (Globals.debug)
+                            console.log("\nScores model collection found");
+                    } else {
+                        if (Globals.debug)
+                            console.log("\nScores model collection not found");
+                        scores_data = new score({
+                            top_scorers: [
+                            ],
+                            users_scores: [
+                            ],
+                        });
+                        scores_data.save(function (err, instance) {
+                            if (instance.length != 0) {
+                                if (Globals.debug)
+                                    console.log("\nScores model initiated");
+                            }
+                            //TODO:  
+                        });
+                    }
+                });
+
                 user.find({
                     'person_credentials.email': email
                 }, function (err, users) {
                     var len = users.length;
                     if (len == 0) {
                         newuser.save(function (err, new_user_instance) {
-                            if (Globals.debug)
-                                console.log("\nSucessfully Registered");
-                            
-                            var newscore = new score({
-                                users_scores: [
-                                    {
-                                        user_id: new_user_instance._id,
-                                        scores: [],
-                                    }
-                                ]
-                            });
-                            newscore.save(function (err, model) {
-                                if (err) {
-                                    // TODO: Decide what to do.
-                                    /*callback({
-                                        res: false,
-                                        response: "Error in updation"
-                                    });*/
-                                    if (Globals.debug)
-                                        console.log("\nError found");
-                                } else {
-                                    // TODO: Decide what to do.
-                                    /*callback({
-                                        res: true,
-                                        w_id: model._id
-                                    });*/
-                                    if (Globals.debug)
-                                        console.log("\nSuccess");
-                                }
-                            });
+                            if (new_user_instance.length != 0) {
+                                if (Globals.debug)
+                                    console.log("\nSucessfully Registered");
 
-                            callback({
-                                'response': "Sucessfully Registered",
-                                success: true
-                            });
+                                score.findOne({}).exec(function (err, instance_score) {
+                                    if (instance_score.length != 0) {
+                                        var newscore = {
+                                            name: entry.name,
+                                            user_id: new_user_instance._id,
+                                            scores: [],
+                                        };
+                                        instance_score.users_scores.push(newscore);
+                                        instance_score.save(function (err, model) {
+                                            if (err) {
+                                                // TODO: Decide what to do.
+                                                /*callback({
+                                                    res: false,
+                                                    response: "Error in updation"
+                                                });*/
+                                                if (Globals.debug)
+                                                    console.log("\nError found");
+                                            } else {
+                                                // TODO: Decide what to do.
+                                                /*callback({
+                                                    res: true,
+                                                    w_id: model._id
+                                                });*/
+                                                if (Globals.debug)
+                                                    console.log("\nSuccess");
+                                            }
+                                        });
+                                    }
+                                });
+
+                                callback({
+                                    'response': "Sucessfully Registered",
+                                    success: true
+                                });
+                            } else {
+                                //TODO: New user could not be saved
+                            }
                         });
                     } else {
                         if (Globals.debug)

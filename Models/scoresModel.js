@@ -5,6 +5,7 @@ var ObjectId = mongoose.Schema.Types.ObjectId;
 
 
 var top_scorers_schema = mongoose.Schema({
+    user_name: String,
     user_id: {
         type: ObjectId,
         ref: "userModel"
@@ -14,6 +15,7 @@ var top_scorers_schema = mongoose.Schema({
 });
 
 var users_scores_schema = mongoose.Schema({
+    user_name: String,
     user_id: {
         type: ObjectId,
         ref: "userModel"

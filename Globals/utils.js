@@ -114,6 +114,7 @@ function session_json_parse(api_request_params) {
     var session_token = api_request_params.session_token;
     var start_session = api_request_params.start_session;
     var end_session = api_request_params.end_session;
+    var name = api_request_params.name;
     var json_entry = [];
 
     for (var i = 0; i < api_request_params.different_events.length; i++) {
@@ -136,6 +137,7 @@ function session_json_parse(api_request_params) {
         start_session: api_request_params.start_session,
         end_session: api_request_params.end_session,
         game_score: api_request_params.game_score,
+        name: api_request_params.name,
         json_entry: json_entry
     };
 
@@ -198,6 +200,8 @@ function check_if_null_or_undefined(variable) {
         } else {
             return false;
         }
+    } else {
+        return isObjectEmpty(variable);
     }
     return true;
 }
@@ -210,6 +214,16 @@ function convert_to_empty_if_null_or_undefined(variable) {
     }
 }
 
+function isObjectEmpty(obj) {
+    for(var key in obj) {
+        if(obj.hasOwnProperty(key))  {
+            return false;
+        }
+    }
+    return true;
+}
+
+exports.isObjectEmpty = isObjectEmpty;
 exports.json_parse = json_parse;
 exports.check_if_null_or_undefined = check_if_null_or_undefined;
 exports.convert_to_empty_if_null_or_undefined = convert_to_empty_if_null_or_undefined;
