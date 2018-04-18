@@ -30,59 +30,65 @@ exports.get_top_scorers = function (callback) {
     });
 };
 
+// Function to update top_scorers list
 exports.check_for_leaderboard_position = function (_id, entry, callback) {
     scores.findOne({}).exec(function (err, scorers) {
+        // if no user is found user is eligible for top_scorers list
         if (utils.check_if_null_or_undefined(scorers.top_scorers)) {
-            var suitable_position = 0 // returns 1000+ if not suitable
             scorers.top_scorers = [];
-            scorers.top_scorers[suitable_position] = {};
-            scorers.top_scorers[suitable_position]["user_id"] = _id;
-            scorers.top_scorers[suitable_position]["rank"] = suitable_position + 1;
-            scorers.top_scorers[suitable_position]["score"] = entry.game_score;
+            var new_top_scorer = {
+                user_id: _id,
+                score: entry.game_score
+            };
+            scorers.top_scorers.push(new_top_scorer);
             scorers.save(function (err, model) {
                 if (!utils.check_if_null_or_undefined(model)) {
                     if (Globals.debug) {
-                        console.log("\nSuccessfully updated to new position of rank:\t" + (suitable_position + 1));
+                        console.log("\nSuccessfully added the user to top_scorers list");
                     }
                     callback({
-                        'response': "Successfully updated to new position of rank " + (suitable_position + 1),
-                        'rank': (suitable_position + 1),
+                        'response': "Successfully added the user to top_scorers list",
                         'success': true
                     });
                 } else {
                     if (Globals.debug) {
-                        console.log("\nSome error occured while adding to position :\t1");
+                        console.log("\nSome error occured while adding the user");
                     }
                     callback({
-                        'response': "Some error occured while adding to position : 1",
+                        'response': "Some error occured while adding the user",
                         'success': false
                     });
                 }
             });
-        } else {
-            var suitable_position = suitable_position_leaderboard(entry, scorers.top_scorers); // returns 1000+ if not suitable
-            console.log("\n\n\nsuitable_position:\t"+suitable_position);
-            if (suitable_position <= scorers.top_scorers.length) {
-                scorers.top_scorers[suitable_position] = {};
-                scorers.top_scorers[suitable_position]["user_id"] = _id;
-                scorers.top_scorers[suitable_position]["rank"] = suitable_position + 1;
-                scorers.top_scorers[suitable_position]["score"] = entry.game_score;
+        } else { // if the top_scorers list is not empty
+            // if the suitable position is available
+            if (is_eligible(entry, scorers.top_scorers)) {
+                //check if the user is already in the list
+                //find the index of the user with same user_id
+                var removeIndex = scorers.top_scorers.map(function(item) { return item.user_id; }).indexOf(_id);
+                // remove the user to avoid inconsistency
+                scorers.top_scorers = scorers.top_scorers.splice(removeIndex, 1);
+
+                var new_top_scorer = {
+                    user_id: _id,
+                    score: entry.game_score
+                };
+                scorers.top_scorers.push(new_top_scorer);
                 scorers.save(function (err, model) {
                     if (!utils.check_if_null_or_undefined(model)) {
                         if (Globals.debug) {
-                            console.log("\nSuccessfully updated to new position of rank:\t" + (suitable_position + 1));
+                            console.log("\nSuccessfully added the user to top_scorers list");
                         }
                         callback({
-                            'response': "Successfully updated to new position of rank " + (suitable_position + 1),
-                            'rank': (suitable_position + 1),
+                            'response': "Successfully added the user to top_scorers list",
                             'success': true
                         });
                     } else {
                         if (Globals.debug) {
-                            console.log("\nSome error occured while adding to position :\t" + (suitable_position + 1));
+                            console.log("\nSome error occured while adding the user");
                         }
                         callback({
-                            'response': "Some error occured while adding to position :" + (suitable_position + 1),
+                            'response': "Some error occured while adding the user",
                             'success': false
                         });
                     }
@@ -146,7 +152,6 @@ exports.push_entry_for_users_scores = function (scores_api_object, callback) {
                     end_session: scores_api_object.end_session,
                     score: scores_api_object.game_score
                 };
-                console.log("\n\n\ninstance:\t"+instance);
                 instance.users_scores.push(score);
                 instance.save(function (err, new_instance) {
                     if (utils.check_if_null_or_undefined(new_instance)) {
@@ -168,48 +173,20 @@ exports.push_entry_for_users_scores = function (scores_api_object, callback) {
             }
         }
     });
-    console.log("\n\n\n"+JSON.stringify(scores_api_object));
-    scores.findOne({}, function (err, instance) {
-        if (!utils.check_if_null_or_undefined(instance)) {
-            var score = {
-                name: scores_api_object.name,
-                session_token: scores_api_object.session_token,
-                end_session: scores_api_object.end_session,
-                score: scores_api_object.game_score
-            };
-            instance.users_scores.push(score);
-            instance.save(function (err, instance) {
-                if (err) {
-                    callback({
-                        success: false,
-                        response: "Error in updation"
-                    });
-                    if (Globals.debug)
-                        console.log("\nError found");
-                } else {
-                    callback({
-                        success: true
-                    });
-                    if (Globals.debug)
-                        console.log("\nSuccess");
-                }
-            });
-        } else {
-
-        }
-    });
 };
 
 //Functions for scores.js
 
-function suitable_position_leaderboard(entry, scorers) {
-    entry.rank = scorers.length + 1000; // set to max 
-    position_to_be_updated = entry.rank;
-    scorers.forEach(function (scorer) {
-        if (entry.score > scorer.score && entry.rank > scorer.rank) { // to find the best position for new entry
-            entry.rank = scorer.rank;
-            position_to_be_updated = scorer.rank;
-        }
-    });
-    return (position_to_be_updated - 1);
+function is_eligible(entry, scorers) {
+    var valid = false;
+    if(scorers.length == 0) {
+        valid = true;
+    } else {
+        scorers.forEach(function (scorer) {
+            if (entry.game_score > scorer.score) { // condition for updation
+                vaild = true;
+            }
+        });
+    }
+    return valid;
 }

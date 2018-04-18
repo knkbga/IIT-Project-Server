@@ -10,7 +10,6 @@ var top_scorers_schema = mongoose.Schema({
         type: ObjectId,
         ref: "userModel"
     },
-    rank: Number,
     score: Number,
 });
 
