@@ -20,7 +20,7 @@ var users_scores_schema = mongoose.Schema({
         ref: "userModel"
     },
     scores: [{
-        session_token: ObjectId,
+        session_token: String,
         end_session: String,
         score: Number
     }],

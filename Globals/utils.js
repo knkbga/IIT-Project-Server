@@ -72,8 +72,6 @@ function new_session_json_parse(api_request_params) {
         set_3: {}
     };
 
-    console.log("return done")
-
     var returned = {
         _id: _id,
         entry: entry,

@@ -1,7 +1,7 @@
 //Change to corresponding environment
 var Global = {
     env: "LOCAL",
-    debug: false
+    debug: true
 };
 
 switch (Global.env) {

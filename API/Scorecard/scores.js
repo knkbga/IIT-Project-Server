@@ -31,147 +31,97 @@ exports.get_top_scorers = function (callback) {
 };
 
 // Function to update top_scorers list
-exports.check_for_leaderboard_position = function (_id, entry, callback) {
-    scores.findOne({}).exec(function (err, scorers) {
-        // if no user is found user is eligible for top_scorers list
-        if (utils.check_if_null_or_undefined(scorers.top_scorers)) {
-            scorers.top_scorers = [];
-            var new_top_scorer = {
-                user_id: _id,
-                score: entry.game_score
-            };
-            scorers.top_scorers.push(new_top_scorer);
-            scorers.save(function (err, model) {
-                if (!utils.check_if_null_or_undefined(model)) {
-                    if (Globals.debug) {
-                        console.log("\nSuccessfully added the user to top_scorers list");
-                    }
-                    callback({
-                        'response': "Successfully added the user to top_scorers list",
-                        'success': true
-                    });
+check_for_leaderboard_position = function (_id, entry) {
+    // _id: id of the user to be entered,
+    /*entry= {"set":1,
+        "session_token":"f5f2867240d1ce9f3b141f5df5d330e446abfff413d468f87f257b5394b0d43849ef0901e64d3f3e0dd8156cd46ad6a6ec2742923b3d1fa3e4cd97c84c85ae63",
+        "start_session":"17-03-2018 at 09:55:55",
+        "end_session":"17-03-2018 at 09:56:26",
+        "game_score":5,
+        "name":"Kanak Bagga",
+        "json_entry":[{
+            "individual_event_score":0,
+            "time_of_start":"17-03-2018 at 09:55:55",
+            "string_question":"765359",
+            "level":6,
+            "time_of_submission":"17-03-2018 at 09:56:05",
+            "string_answer":"",
+            "lives_till_used":1,
+            "total_volume":"5-5-5-5-5-5",
+            "success":"false"
+        },{...},{...}
+        ]}*/
+    /*
+        if(no user present in toppers list){
+            add a new entry
+        } else if (any user/users present){
+            if(user already present) {
+                if(his/her previous score is better ){
+                    remove its previous score and add the new
                 } else {
-                    if (Globals.debug) {
-                        console.log("\nSome error occured while adding the user");
-                    }
-                    callback({
-                        'response': "Some error occured while adding the user",
-                        'success': false
-                    });
+                    he is already in the list. HE has to score better than previous
                 }
-            });
-        } else { // if the top_scorers list is not empty
-            // if the suitable position is available
-            if (is_eligible(entry, scorers.top_scorers)) {
-                //check if the user is already in the list
-                //find the index of the user with same user_id
-                var removeIndex = scorers.top_scorers.map(function(item) { return item.user_id; }).indexOf(_id);
-                // remove the user to avoid inconsistency
-                scorers.top_scorers = scorers.top_scorers.splice(removeIndex, 1);
-
-                var new_top_scorer = {
-                    user_id: _id,
-                    score: entry.game_score
-                };
-                scorers.top_scorers.push(new_top_scorer);
-                scorers.save(function (err, model) {
-                    if (!utils.check_if_null_or_undefined(model)) {
-                        if (Globals.debug) {
-                            console.log("\nSuccessfully added the user to top_scorers list");
-                        }
-                        callback({
-                            'response': "Successfully added the user to top_scorers list",
-                            'success': true
-                        });
-                    } else {
-                        if (Globals.debug) {
-                            console.log("\nSome error occured while adding the user");
-                        }
-                        callback({
-                            'response': "Some error occured while adding the user",
-                            'success': false
-                        });
-                    }
-                });
             } else {
-                if (Globals.debug) {
-                    console.log("\nNo suitable position found in leaderboard");
+                if(his/her score qualifies the minimum requirement of the score) {
+                    add the user to the list
+                } else {
+                    you are not eligible
                 }
-                callback({
-                    'response': "No suitable position found in leaderboard",
-                    'success': false
-                });
+            }
+        }
+    */
+    scores.findOne({},function(err,scores_find_instance) {
+        // if ( no user present in toppers list )
+        if( scores_find_instance.top_scorers.length == 0 ) {
+            push_user_top_scorer(scores_find_instance,_id,entry);
+        } else {
+            // if(user already present)
+            if( scores_find_instance.top_scorers.id(_id) != null ) {
+                //remove its previous score and add the new
+                if(scores_find_instance.top_scorers.id(_id).score < entry.game_score) { 
+                    scores_find_instance.top_scorers.id(_id).score = entry.game_score;
+                    scores_find_instance.save(function(err,score_change_instance) {
+                        if(err) {
+                            if (Globals.debug)
+                                console.log("\nSome error occurred while updating the score");
+                        } else {
+                            if (Globals.debug)
+                                console.log("\nScore of existing user updated");
+                        }
+                    });
+                // he is already in the list. HE has to score better than previous
+                } else { 
+                    if(err) {
+                        if (Globals.debug)
+                            console.log("\nScored bad than previous score");
+                    } else {
+                        if (Globals.debug)
+                            console.log("\nScored bad than previous score, no change made");
+                    }
+                }
+            } else {
+                // if(his/her score qualifies the minimum requirement of the score)
+                if(is_eligible(entry,scores_find_instance.top_scorers)) {
+                    push_user_top_scorer(scores_find_instance,_id,entry);
+                }
             }
         }
     });
 };
 
-exports.push_entry_for_users_scores = function (scores_api_object, callback) {
-    scores.find({_id:scores_api_object._id}, function (err, instance) {
-        if (utils.check_if_null_or_undefined(instance)) {} else {
-            if (utils.check_if_null_or_undefined(instance.users_scores)) {
-                instance.users_scores = [];
-            }
-            if (utils.check_if_null_or_undefined(instance)) { // not found any user, create a new
-                instance = instance.users_scores;
-                var score = new scores({
-                    user_id: {
-                        type: scores_api_object._id,
-                        ref: "userModel"
-                    },
-                    scores: [{
-                        session_token: scores_api_object.session_token,
-                        name: scores_api_object.name,
-                        end_session: scores_api_object.end_session,
-                        score: scores_api_object.game_score
-                    }]
-                });
-                score.save(function (err, new_instance) {
-                    if (utils.check_if_null_or_undefined(new_instance)) { // instance couldn't be saved
-                        // TODO: Decide what to be done when the instance is not saved.
-                        if (Globals.debug)
-                            console.log("\nCouldn't add new entry to users_score");
-                        callback({
-                            'response': "Some error occured while creating new",
-                            success: false
-                        });
-                    } else {
-                        // TODO: Decide what to be done when the instance is saved.
-                        if (Globals.debug)
-                            console.log("\nSuccessfully added new entry to users_score");
-                        callback({
-                            'response': "Sucessfully Added",
-                            success: true
-                        });
-                    }
-                });
-            } else { // found an existing user
-                var score = {
-                    session_token: scores_api_object.session_token,
-                    name: scores_api_object.name,
-                    end_session: scores_api_object.end_session,
-                    score: scores_api_object.game_score
-                };
-                instance.users_scores.push(score);
-                instance.save(function (err, new_instance) {
-                    if (utils.check_if_null_or_undefined(new_instance)) {
-                        if (Globals.debug)
-                            console.log("\nCouldn't add entry to users_score to existing user");
-                        callback({
-                            'response': "Some error occured while pushing the scores in existing user",
-                            success: false
-                        });
-                    } else {
-                        if (Globals.debug)
-                            console.log("\nSuccessfully added entry to users_score to existing user");
-                        callback({
-                            'response': "Successfully added the entry to existing user",
-                            success: true
-                        });
-                    }
-                });
-            }
-        }
+exports.push_entry_for_users_scores = function (scores_api_object) {
+/*
+    scores_api_object: {
+        "_id":"5adf2c681ed8ac6649f3efb5",
+        "name":"Kanak Bagga",
+        "session_token":"4d741855f15a1afc462d70370da82dd0c819dd22edf16509ab920edb4328cc7020bd394567a4042a3cbe6cc93bec9fad36a8bd7e5d4c270209fa86dad5ec11b4",
+        "end_session":"17-03-2018 at 09:56:26",
+        "game_score":12
+    }
+    push new score to existing record (existing record is a mandatory condition as the it gets created during registration)
+*/
+    scores.findOne({},function(err,score_find_instance){
+        push_user_users_scores(score_find_instance, scores_api_object);
     });
 };
 
@@ -179,7 +129,7 @@ exports.push_entry_for_users_scores = function (scores_api_object, callback) {
 
 function is_eligible(entry, scorers) {
     var valid = false;
-    if(scorers.length == 0) {
+    if(scorers.length < 5 ) {
         valid = true;
     } else {
         scorers.forEach(function (scorer) {
@@ -190,3 +140,41 @@ function is_eligible(entry, scorers) {
     }
     return valid;
 }
+
+function push_user_users_scores(score_find_instance,scores_api_object) {
+    var add_score = {
+        session_token: scores_api_object.session_token,
+        end_session: scores_api_object.end_session,
+        score: scores_api_object.game_score
+    };
+    score_find_instance.users_scores.id(scores_api_object._id).scores.push(add_score);
+    score_find_instance.save(function(err,score_add_instance){
+        if(err) {
+            if (Globals.debug)
+                console.log("\nSome error occurred while adding users score to users_scores");
+        } else {
+            if (Globals.debug)
+                console.log("\nNo user was present so user added to users_scores");
+            check_for_leaderboard_position(scores_api_object._id,scores_api_object);
+        }
+    });
+}
+
+function push_user_top_scorer (scores_find_instance,_id,entry) {
+    var new_top_scorer = {
+        user_id: _id,
+        _id: _id,
+        user_name: entry.name,
+        score: entry.game_score
+    };
+    scores_find_instance.top_scorers.push(new_top_scorer);
+    scores_find_instance.save(function(err,new_top_scorer_save_instance) {
+        if(err) {
+            if (Globals.debug)
+                console.log("\nSome error occurred while adding new user to top_scorers, no user was present");
+        } else {
+            if (Globals.debug)
+                console.log("\nNo user was present so user added to top_scorers");
+        }
+    });
+} 

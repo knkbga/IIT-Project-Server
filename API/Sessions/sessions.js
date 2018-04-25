@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var Async = require('async');
 var ObjectId = require('mongodb').ObjectID;
 var users = require('../../Models/userModel');
 var score = require('../../Models/scoresModel');
@@ -34,10 +35,7 @@ exports.session = function (w_wo, _id, entry, callback) {
                     end_session: entry.end_session,
                     game_score: entry.game_score
                 }
-                scores_api.push_entry_for_users_scores(scores_api_object, callback);
-
-                // enter the scores in leaderboard if eligible
-                scores_api.check_for_leaderboard_position(_id, entry, callback);
+                scores_api.push_entry_for_users_scores(scores_api_object);
 
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].WO_Distraction.push(entry.json_entry[i]);
@@ -49,14 +47,14 @@ exports.session = function (w_wo, _id, entry, callback) {
                             response: "Error in updation"
                         });
                         if (Globals.debug)
-                            console.log("\nError found");
+                            console.log(callback);
                     } else {
                         callback({
                             res: true,
                             w_id: model._id
                         });
                         if (Globals.debug)
-                            console.log("\nSuccess");
+                            console.log(callback);
                     }
                 });
             }
@@ -82,11 +80,7 @@ exports.session = function (w_wo, _id, entry, callback) {
                     end_session: entry.end_session,
                     game_score: entry.game_score
                 }
-                scores_api.push_entry_for_users_scores(scores_api_object, callback);
-
-                // enter the scores in leaderboard if eligible
-                scores_api.check_for_leaderboard_position(_id, entry, callback);
-
+                scores_api.push_entry_for_users_scores(scores_api_object);
 
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].Audio.push(entry.json_entry[i]);
@@ -131,11 +125,7 @@ exports.session = function (w_wo, _id, entry, callback) {
                     end_session: entry.end_session,
                     game_score: entry.game_score
                 }
-                scores_api.push_entry_for_users_scores(scores_api_object, callback);
-
-                // enter the scores in leaderboard if eligible
-                scores_api.check_for_leaderboard_position(_id, entry, callback);
-
+                scores_api.push_entry_for_users_scores(scores_api_object);
 
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].Visual.push(entry.json_entry[i]);
@@ -180,11 +170,7 @@ exports.session = function (w_wo, _id, entry, callback) {
                     end_session: entry.end_session,
                     game_score: entry.game_score
                 }
-                scores_api.push_entry_for_users_scores(scores_api_object, callback);
-
-                // enter the scores in leaderboard if eligible
-                scores_api.check_for_leaderboard_position(_id, entry, callback);
-
+                scores_api.push_entry_for_users_scores(scores_api_object);
 
                 for (var i = 0; i < entry.json_entry.length; i++) {
                     instance.comprehensive_events.id(entry.session_token)[set].W_Distraction.push(entry.json_entry[i]);
@@ -211,7 +197,6 @@ exports.session = function (w_wo, _id, entry, callback) {
     }
 }
 exports.new_session = function (_id, entry, session_token, callback) {
-    console.log("\nIN Utils.function :: \t new_session");
     users.findByIdAndUpdate(_id, {
             $push: {
                 "comprehensive_events": entry

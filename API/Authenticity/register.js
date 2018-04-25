@@ -85,8 +85,9 @@ exports.register = function (entry, callback) {
                                 score.findOne({}).exec(function (err, instance_score) {
                                     if (instance_score.length != 0) {
                                         var newscore = {
-                                            name: entry.name,
+                                            user_name: entry.name,
                                             user_id: new_user_instance._id,
+                                            _id: new_user_instance._id,
                                             scores: [],
                                         };
                                         instance_score.users_scores.push(newscore);
