@@ -11,6 +11,7 @@ var top_scorers_schema = mongoose.Schema({
         ref: "userModel"
     },
     score: Number,
+    rank: Number
 });
 
 var users_scores_schema = mongoose.Schema({
