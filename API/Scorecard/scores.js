@@ -12,9 +12,10 @@ exports.get_top_scorers = function (callback) {
             if (Globals.debug) {
                 console.log("\nSuccessfully got the list of top scorers:\t" + JSON.stringify(scorers.top_scorers));
             }
+            var top_scorers_sorted_list = sort_top_list_scorers(scorers.top_scorers);
             callback({
                 'response': "Successfully got the list.",
-                'top_scorers': scorers.top_scorers,
+                'top_scorers': top_scorers_sorted_list,
                 'success': true
             });
         } else {
@@ -29,6 +30,35 @@ exports.get_top_scorers = function (callback) {
         }
     });
 };
+
+// push users new entry to users score, to be performed always
+exports.push_entry_for_users_scores = function (scores_api_object) {
+/*
+    scores_api_object: {
+        "_id":"5adf2c681ed8ac6649f3efb5",
+        "name":"Kanak Bagga",
+        "session_token":"4d741855f15a1afc462d70370da82dd0c819dd22edf16509ab920edb4328cc7020bd394567a4042a3cbe6cc93bec9fad36a8bd7e5d4c270209fa86dad5ec11b4",
+        "end_session":"17-03-2018 at 09:56:26",
+        "game_score":12
+    }
+    push new score to existing record (existing record is a mandatory condition as the it gets created during registration)
+*/
+    scores.findOne({},function(err,score_find_instance){
+        push_user_users_scores(score_find_instance, scores_api_object,function(response){
+            if(response.function_success) {
+                check_for_leaderboard_position(scores_api_object._id, scores_api_object);
+            }
+        });
+    });
+};
+
+
+/*
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                 Functions for top_scorers
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
 
 // Function to update top_scorers list
 check_for_leaderboard_position = function (_id, entry) {
@@ -52,115 +82,110 @@ check_for_leaderboard_position = function (_id, entry) {
         },{...},{...}
         ]}*/
     /*
-        if(no user present in toppers list){
+        if(no user present in toppers list or the number of users is less than 5){
             add a new entry
         } else if (any user/users present){
-            if(user already present) {
-                if(his/her previous score is better ){
-                    remove its previous score and add the new
-                } else {
-                    he is already in the list. HE has to score better than previous
-                }
+            if(his/her score qualifies the minimum requirement of the score) {
+                add the user to the list
+                after adding the user remove the user having lowest score
             } else {
-                if(his/her score qualifies the minimum requirement of the score) {
-                    add the user to the list
-                    after adding the user remove the user having lowest score
-                } else {
-                    you are not eligible
-                }
+                you are not eligible
             }
         }
     */
     scores.findOne({},function(err,scores_find_instance) {
         // if ( no user present in toppers list )
-        if( scores_find_instance.top_scorers.length == 0 ) {
-            push_user_top_scorer(scores_find_instance,_id,entry);
+        if( scores_find_instance.top_scorers.length < 5 ) {
+            push_user_top_scorer(scores_find_instance,_id,entry,function(response){
+
+            });
         } else {
-            // if(user already present)
-            if( scores_find_instance.top_scorers.id(_id) != null ) {
-                //remove its previous score and add the new
-                update_user_top_scorer(scores_find_instance,_id,entry);
-            } else {
-                // if(his/her score qualifies the minimum requirement of the score)
-                var eligibility_criteria_obj = eligibility_criteria(entry,scores_find_instance.top_scorers);
-                var valid = eligibility_criteria_obj.valid;
-                var scorer_to_be_removed = eligibility_criteria_obj.scorer_to_be_removed;
-                if(valid) {
-                    var rank = find_rank(scores_find_instance.top_scorers,entry);
-                    push_user_top_scorer(scores_find_instance,_id,entry,rank,scorer_to_be_removed);
-                }
+            // if(his/her score qualifies the minimum requirement of the score)
+            var is_eligible_return_obj = is_eligible(scores_find_instance.top_scorers,entry);
+            console.log("In ELSE \n\tis_eligible_return_obj:\t"+JSON.stringify(is_eligible_return_obj));
+            if (is_eligible_return_obj.valid) {
+                //if the users are exceeding 5 members then delete the user_to_be_deleted
+                push_user_top_scorer(scores_find_instance,_id,entry,function(response){
+                    if(response.function_success) {
+                        scores_find_instance.top_scorers.pull({ _id: is_eligible_return_obj.user_to_be_removed_id });
+                        scores_find_instance.save(function(err,updated_topser_list_instance){
+                            if(err) {
+                                if (Globals.debug)
+                                    console.log("\nUser to be deleted couldn't be deleted");
+                            } else {
+                                if (Globals.debug)
+                                    console.log("\nUser to be deleted deleted successfully");
+                            }
+                        });
+                    }
+                });
+
             }
         }
     });
 };
 
-exports.push_entry_for_users_scores = function (scores_api_object) {
-/*
-    scores_api_object: {
-        "_id":"5adf2c681ed8ac6649f3efb5",
-        "name":"Kanak Bagga",
-        "session_token":"4d741855f15a1afc462d70370da82dd0c819dd22edf16509ab920edb4328cc7020bd394567a4042a3cbe6cc93bec9fad36a8bd7e5d4c270209fa86dad5ec11b4",
-        "end_session":"17-03-2018 at 09:56:26",
-        "game_score":12
-    }
-    push new score to existing record (existing record is a mandatory condition as the it gets created during registration)
-*/
-    scores.findOne({},function(err,score_find_instance){
-        push_user_users_scores(score_find_instance, scores_api_object);
+function is_eligible(scorers,entry) {
+    var minimum_user_score = 1000; // to get the user whose score is less than the new_user and has the lowest score among all also
+    var user_to_be_removed_id;
+    var valid = false; // to indicate validity of user to be added.
+    var users_encountered = 0;
+    scorers.forEach(function(scorer){
+        users_encountered++;
+        if (scorer.score <= entry.game_score && scorer.score <= minimum_user_score) {
+            valid = true;
+            minimum_user_score = scorer.score;
+            user_to_be_removed_id = scorer._id;
+        }
     });
-};
-
-//Functions for scores.js
-
-function eligibility_criteria(entry, scorers) {
-    var valid = false;
-    var scorer_to_be_removed;
-    var scorer_to_be_removed_score = 1000;//set to max
-    if(scorers.length < 5 ) {
-        valid = true;
-    } else {
-        scorers.forEach(function (scorer) {
-            if (entry.game_score > scorer.score) { // condition for updation
-                console.log("encountered scorer with less score")
-                valid = true;
-                if(scorer.score < scorer_to_be_removed_score) {
-                   scorer_to_be_removed = scorer.used_id;
-                }
-            }
-        });
-    }
-    return {valid:valid,scorer_to_be_removed:scorer_to_be_removed};
+    return ({
+        valid: valid,
+        user_to_be_removed_id: user_to_be_removed_id
+    });
 }
 
-function find_rank(scorers,entry) {
-    /*
-    if(top_scorers.length==0) {
-        return 1;
-    } else {
-        itertate and find how many scores are having great score than the score of the user to be added
-    }
-    */
-    if(scorers.length==0) {
-        return 1;
-    } else {
-        var max_rank;
-        if(scorers.length < 5)
-            max_rank = scorers.length+1;
-        else
-            max_rank = scorers.length;
-        console.log("max rank set to "+max_rank);
-        scorers.forEach(function (scorer) {
-            if (entry.game_score > scorer.score) {
-                max_rank = max_rank - 1;
-                console.log("encountered scorer with less score")
-            }
-        });
-        console.log("rank set to "+max_rank);
-        return max_rank;
-    }
-};
+// add new user to top_scorers list
+function push_user_top_scorer(scores_find_instance,_id,entry,callback) {
+    var new_top_scorer = {
+      user_id: _id,
+      user_name: entry.name,
+      score: entry.game_score,
+    };
+    scores_find_instance.top_scorers.push(new_top_scorer);
+    scores_find_instance.save(function(err,new_top_scorer_save_instance) {
+      if(err) {
+          if (Globals.debug)
+              console.log("\nSome error occurred while adding new user to top_scorers, no user was present");
+          callback({
+              function_success: false
+          })
+      } else {
+          if (Globals.debug)
+              console.log("\nNo user was present so user added to top_scorers");
+          callback({
+              function_success: true
+          })
+      }
+    });
+}
 
-function push_user_users_scores(score_find_instance,scores_api_object) {
+function sort_top_list_scorers(top_scorers) {
+    top_scorers.sort(function(a, b){
+        return a.score-b.score;
+    });
+    return top_scorers;
+}
+
+
+/*
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                Functions for users_scorers
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+*/
+
+
+function push_user_users_scores(score_find_instance,scores_api_object,callback) {
+    var function_success = false;
     var add_score = {
         session_token: scores_api_object.session_token,
         end_session: scores_api_object.end_session,
@@ -171,58 +196,15 @@ function push_user_users_scores(score_find_instance,scores_api_object) {
         if(err) {
             if (Globals.debug)
                 console.log("\nSome error occurred while adding users score to users_scores");
+            callback({
+                function_success: false
+            })
         } else {
             if (Globals.debug)
-                console.log("\nNo user was present so user added to users_scores");
-            check_for_leaderboard_position(scores_api_object._id,scores_api_object);
+                console.log("\nUser added to users_scores successfully");
+            callback({
+                function_success: true
+            })
         }
     });
-}
-
-function push_user_top_scorer (scores_find_instance,_id,entry,rank,scorer_to_be_removed) {
-    var new_top_scorer = {
-        user_id: _id,
-        _id: _id,
-        user_name: entry.name,
-        score: entry.game_score,
-        rank: rank
-    };
-    // rank of other users increased
-    if(scores_find_instance.top_scorers.length == 5) {
-        scores_find_instance.top_scorers.pull(scorer_to_be_removed);
-    }
-    scores_find_instance.top_scorers.push(new_top_scorer);
-    scores_find_instance.save(function(err,new_top_scorer_save_instance) {
-        if(err) {
-            if (Globals.debug)
-                console.log("\nSome error occurred while adding new user to top_scorers, no user was present");
-        } else {
-            if (Globals.debug)
-                console.log("\nNo user was present so user added to top_scorers");
-        }
-    });
-}
-
-function update_user_top_scorer (scores_find_instance,_id,entry) {
-    if(scores_find_instance.top_scorers.id(_id).score < entry.game_score) {
-        scores_find_instance.top_scorers.id(_id).score = entry.game_score;
-        scores_find_instance.save(function(err,score_change_instance) {
-            if(err) {
-                if (Globals.debug)
-                    console.log("\nSome error occurred while updating the score");
-            } else {
-                if (Globals.debug)
-                    console.log("\nScore of existing user updated");
-            }
-        });
-    // he is already in the list. HE has to score better than previous
-    } else {
-        if(err) {
-            if (Globals.debug)
-                console.log("\nScored bad than previous score");
-        } else {
-            if (Globals.debug)
-                console.log("\nScored bad than previous score, no change made");
-        }
-    }
 }

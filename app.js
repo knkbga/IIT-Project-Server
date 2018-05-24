@@ -1,6 +1,6 @@
 /*
----------------------------------------------- 
-    Node Modules 
+----------------------------------------------
+    Node Modules
 ----------------------------------------------
 */
 var express = require('express');
@@ -9,9 +9,9 @@ var port = process.env.PORT || 8080;
 var bodyParser = require('body-parser');
 var mongoose = require("mongoose");
 /*
----------------------------------------------- 
-    Glboals 
----------------------------------------------- 
+----------------------------------------------
+    Glboals
+----------------------------------------------
 */
 var Globals = require("./Globals/variables");
 
@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 //DB Connection
-mongoose.connect(Globals.connect_url);
+mongoose.connect(Globals.connect_url,{ useMongoClient: true });
 
 //Middlewares
 app.use(function (req, res, next) {
@@ -30,7 +30,7 @@ app.use(function (req, res, next) {
   next();
 })
 
-// Routes 
+// Routes
 require('./routes/routes.js')(app);
 app.listen(port);
 console.log('The App runs on port ' + port);

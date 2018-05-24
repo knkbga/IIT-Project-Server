@@ -16,7 +16,6 @@ exports.session = function (w_wo, _id, entry, callback) {
     var set = "set_" + entry.set;
     if (w_wo == 3) //Without Distraction
     {
-
         users.findOne({
             _id: ObjectId(_id)
         }).exec(
@@ -25,6 +24,7 @@ exports.session = function (w_wo, _id, entry, callback) {
                 instance.comprehensive_events.id(entry.session_token).set({
                     "end_session": entry.json_entry[entry.json_entry.length - 1].time_of_submission
                 });
+
                 instance.comprehensive_events.id(entry.session_token)[set].scores.WO_Distraction = entry.game_score;
 
                 //enter the score for current user to Scores Model

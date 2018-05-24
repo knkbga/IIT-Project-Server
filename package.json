@@ -9,6 +9,7 @@
     "author": "Kanak Bagga",
     "license": "ISC",
     "dependencies": {
+        "async": "^1.5.2",
         "body-parser": "^1.17.1",
         "crypto": "~0.0.3",
         "csprng": "~0.1.1",
@@ -18,7 +19,6 @@
         "mongodb": "^2.2.25",
         "mongoose": "^4.11.7",
         "nodemailer": "~0.6.3",
-        "path": "^0.12.7",
-        "async": "^1.5.2"
+        "path": "^0.12.7"
     }
 }
